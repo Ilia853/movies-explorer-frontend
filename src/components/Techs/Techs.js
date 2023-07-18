@@ -7,7 +7,7 @@ export default function Techs() {
           <h2 className="title__text">Технологии</h2>
         </div>
         <div className="promo__landing-text-wrapper promo__landing-text-wrapper_type_techs">
-          <h1 className="promo__landing-text">7 технологий</h1>
+          <h1 className="promo__landing-text promo__landing-text_type_techs">7 технологий</h1>
           <p className="techs-discription">На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>
         </div>
         <section className="nav-tab_type_techs">

@@ -43,3 +43,20 @@
 .portfolio__link-img {
     margin: 40px 5px 0 0;
 }
+
+@media screen and (max-width: 950px) {
+    .portfolio__wrapper {
+        margin: 0 50px 0;
+    }
+    .portfolio__title {
+        margin: 91px 0 28px;
+    }
+    .portfolio__site {
+        font-size: 28px;
+        line-height: 50px;
+        letter-spacing: -1.12px;
+    }
+    .portfolio__block:last-child {
+        margin-bottom: 90px;
+    }
+}

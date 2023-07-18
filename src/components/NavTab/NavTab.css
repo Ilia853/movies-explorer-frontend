@@ -18,3 +18,10 @@
     margin-right: 10px;
     cursor: pointer;
 }
+
+@media screen and (max-width: 950px) {
+    .nav-tab {
+        display: flex;
+        margin-top: 315px;
+    }
+}

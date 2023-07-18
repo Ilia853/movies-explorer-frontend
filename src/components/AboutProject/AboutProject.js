@@ -18,8 +18,8 @@ function AboutProject() {
           </div>
           <div className="table">
             <div className="table-line">
-              <div className="table__cell-short_type_blue">1 неделя</div>
-              <div className="table__cell-long_type_gray">4 недели</div>
+              <div className="table__cell-short table__cell-short_type_blue">1 неделя</div>
+              <div className="table__cell-long table__cell-long_type_gray">4 недели</div>
             </div>
             <div className="table-line">
               <div className="table__cell-short">Back-end</div>

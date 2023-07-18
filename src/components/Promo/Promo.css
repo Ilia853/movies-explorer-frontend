@@ -13,9 +13,8 @@
     align-items: center;
     border-radius: 10px;
     background: #F5F5F5;
-    max-width: 1200px;
     width: 100%;
-    margin-top: 20px;
+    margin: 20px 40px 0;
 }
 
 .promo__landing-text-wrapper {
@@ -33,4 +32,22 @@
     line-height: 58px;
     letter-spacing: -2px;
     margin: 0;
+}
+
+@media screen and (max-width: 950px) {
+    .promo {
+        height: 854px;
+    }
+    .promo__landing {
+        margin: 20px 20px 0;
+    }
+    .promo__landing-text-wrapper {
+        margin-top: 350px;
+        max-width: 680px;
+    }
+    .promo__landing-text {
+        font-size: 40px;
+        line-height: 52px;
+        letter-spacing: -1.6px;
+    }
 }

@@ -36,3 +36,30 @@
     height: 60px;
     cursor: default
 }
+
+@media screen and (max-width: 950px) {
+    .title_type_techs {
+        margin: 67px 50px 0 50px;
+    }
+    .promo__landing-text-wrapper_type_techs {
+        margin: 80px auto 0;
+    }
+    .promo__landing-text_type_techs {
+        font-size: 50px;
+        line-height: 58px;
+        letter-spacing: -2px;
+    }
+    .techs-discription {
+        margin: 22px 0 0;
+        font-size: 12px;
+        line-height: 18px;
+        letter-spacing: -0.48px;
+    }
+    .nav-tab_type_techs {
+        margin: 83px auto 90px;
+    }
+    .nav-tab__button_type_techs {
+        width: 84px;
+        height: 57px;
+    }
+}

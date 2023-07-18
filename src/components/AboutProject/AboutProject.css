@@ -65,7 +65,7 @@
     font-style: normal;
     vertical-align: middle;
     max-width: 1140px;
-    margin: 110px 0 105px 70px;
+    margin: 110px 70px 105px 70px;
 }
 
 .table-line {
@@ -76,18 +76,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 228px;
-    height: 36px;
-    color: #A0A0A0;
-    font-weight: 500;
-    line-height: 17px;
-}
-
-.table__cell-long {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 912px;
+    width: 20%;
     height: 36px;
     color: #A0A0A0;
     font-weight: 500;
@@ -95,25 +84,48 @@
 }
 
 .table__cell-short_type_blue {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 228px;
-    height: 36px;
     background:#3456F3;
     color: #FFF;
     font-weight: 400;
     line-height: normal;
 }
 
-.table__cell-long_type_gray {
+.table__cell-long {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 912px;
+    width: 80%;
     height: 36px;
+    color: #A0A0A0;
+    font-weight: 500;
+    line-height: 17px;
+}
+
+.table__cell-long_type_gray {
     background: #F2F2F2;
     color: #000;
     font-weight: 400;
     line-height: normal;
+}
+
+@media screen and (max-width: 950px) {
+    .title {
+        margin: 90px 50px 0 50px;
+    }
+    .discription {
+        margin: 0 50px;
+    }
+    .discription__cell:last-child {
+        margin-left: 30px;
+    }
+    .discription__cell-text {
+        margin: 22px 0 0;
+    }
+    .discription__cell-text {
+        font-size: 12px;
+        line-height: 18px;
+    }
+    .table {
+        margin: 92px 50px 90px 50px;
+    }
 }

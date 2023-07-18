@@ -41,3 +41,12 @@
     text-decoration: none;
     color: #000;
 }
+
+@media screen and (max-width: 950px) {
+    .footer__text {
+        margin: 58px auto 0;
+    }
+    .footer__wrapper {
+        margin: 20px 30px;
+    }
+}
