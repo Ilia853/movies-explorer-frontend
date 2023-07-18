@@ -11,7 +11,7 @@
 
 .about-me__information {
     display: flex;
-    margin: 66px 70px;
+    margin: 66px 70px 0;
     justify-content: space-between;
 }
 
