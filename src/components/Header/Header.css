@@ -43,11 +43,33 @@
     margin-top: 21px;
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 950px) {
     .header__sign-links {
         margin-right: 30px;
     }
     .header__logo {
         margin-left: 30px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .header__sign-links {
+        margin-right: 14px;
+    }
+    .header__logo {
+        margin-left: 14px;
+    }
+    .header__sign-up {
+        margin-top: 29px;
+        margin-right: 14px;
+        font-size: 10px;
+        line-height: 16px;
+    }
+    .header__sign-in {
+        width: 54px;
+        height: 26px;
+        margin-top: 24px;
+        font-size: 10px;
+        line-height: 16px;
     }
 }

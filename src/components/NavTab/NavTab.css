@@ -25,3 +25,16 @@
         margin-top: 315px;
     }
 }
+
+@media screen and (max-width: 450px) {
+    .nav-tab {
+        margin-top: 212px;
+    }
+    .nav-tab__button {
+        width: 82px;
+        height: 26px;
+        border-radius: 6px;
+        font-size: 10px;
+        margin-right: 6px;
+    }
+}

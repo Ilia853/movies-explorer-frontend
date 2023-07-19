@@ -50,3 +50,41 @@
         margin: 20px 30px;
     }
 }
+
+@media screen and (max-width: 450px) {
+    .footer {
+        height: auto;
+    }
+    .footer__text {
+        margin: 59px auto 0;
+        font-size: 12px;
+        line-height: normal;
+    }
+    .footer__wrapper {
+        flex-direction: column-reverse;
+        align-items: center;
+        margin: 0 auto;
+    }
+    .footer__links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .footer__praktikum {
+        margin: 30px auto 0; 
+        font-size: 12px;
+        line-height: normal;
+    }
+    .footer__github {
+        color: #000;
+        font-size: 12px;
+        line-height: normal;
+        margin: 12px auto 0;
+    }
+    .footer__date {
+        color: #A0A0A0;
+        font-size: 12px;
+        line-height: normal;
+        margin: 30px auto 20px;
+    }
+}
