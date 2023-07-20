@@ -113,6 +113,9 @@
     .header__logo_type_register {
         margin: 232px 0 0;
     }
+    .register__sign {
+        margin-bottom: 232px;
+    }
 }
 
 @media screen and (max-width: 450px) {

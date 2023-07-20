@@ -1,0 +1,15 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.register__form-button_type_login {
+    margin: 203px 0 0;
+}
+
+@media screen and (max-width: 450px) {
+    .register__form-button_type_login {
+        margin: 291px 0 0;
+    }
+}

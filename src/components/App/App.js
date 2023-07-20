@@ -4,6 +4,7 @@ import './App.css';
 // import Footer from '../Footer/Footer';
 import Main from '../Main/Main';
 import Register from '../Register/Register';
+import Login from '../Login/Login';
 import { Route, Routes } from "react-router-dom";
 
 function App() {
@@ -19,6 +20,10 @@ function App() {
         <Route 
           path='/sign-up'
           element={<Register/>}
+        />
+        <Route 
+          path='/sign-in'
+          element={<Login />}
         />
       </Routes>
     </div>
