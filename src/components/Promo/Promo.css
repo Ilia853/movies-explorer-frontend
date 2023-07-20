@@ -1,9 +1,7 @@
 .promo {
     display: flex;
-    max-width: 1280px;
     height: 513px;
     background: #FAFAFA;
-    margin: 0 auto;
     justify-content: center;
 }
 
@@ -25,7 +23,6 @@
 .promo__landing-text {
     color: #000;
     text-align: center;
-    font-family: Inter;
     font-size: 50px;
     font-style: normal;
     font-weight: 400;

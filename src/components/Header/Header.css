@@ -1,11 +1,8 @@
 .header {
     display: flex;
     justify-content: space-between;
-    max-width: 1280px;
     height: 74px;
     background: #FAFAFA;
-    margin: 0 auto;
-    font-family: Inter;
     font-style: normal;
     font-weight: 500;
 }
