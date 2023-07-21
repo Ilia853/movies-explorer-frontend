@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function Login() {
+export default function Login({ handleSubmitLogin }) {
   return (
     <section className="login">
       <div className="register__header-logo-wrapper">
@@ -20,7 +20,7 @@ export default function Login() {
           type="password"
         />
         <span className="register__error"></span>
-        <button className="register__form-button register__form-button_type_login">Войти</button>
+        <button className="register__form-button register__form-button_type_login" onClick={handleSubmitLogin}>Войти</button>
       </form>
       <div className="register__sign">
         <p className="register__paragraph">Ещё не зарегистрированы?</p>
