@@ -1,0 +1,23 @@
+.movies {
+    text-align: center;
+}
+
+.movies__button-more {
+    width: 320px;
+    height: 36px;
+    border: none;
+    border-radius: 6px;
+    background: #F4F4F4;
+    color: #000;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: normal;
+    margin: 78px auto 80px;
+    padding: 0;
+    cursor: pointer;
+}
+
+.movies__button-more:hover {
+    opacity: .6;
+}

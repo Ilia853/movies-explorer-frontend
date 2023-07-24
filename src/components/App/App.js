@@ -1,4 +1,4 @@
-// import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 // import Header from '../Header/Header';
 // import Footer from '../Footer/Footer';
@@ -12,12 +12,18 @@ import { useNavigate } from "react-router-dom";
 
 function App() {
   const navigate = useNavigate();
-  // const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const handleSubmitLogin = (e) => {
     e.preventDefault();
     navigate("/movies");
+    handleLogin();
+    console.log(loggedIn);
   };
+
+  function handleLogin() {
+    setLoggedIn(true);
+  }
 
   return (
     <div>
@@ -25,7 +31,7 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/sign-up" element={<Register />} />
         <Route path="/sign-in" element={<Login handleSubmitLogin={handleSubmitLogin} />} />
-        <Route path="/movies" element={<Movies />} />
+        <Route path="/movies" element={<Movies loggedIn={loggedIn}/>} />
       </Routes>
     </div>
   );

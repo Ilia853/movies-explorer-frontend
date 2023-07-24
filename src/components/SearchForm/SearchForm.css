@@ -2,7 +2,9 @@
     display: flex;
     justify-content: space-between;
     max-width: 1140px;
-    margin: 0 auto;
+    margin: 80px auto 0;
+    padding-bottom: 83px;
+    border-bottom: 1px solid #AAA;
 }
 
 .movies__search-form {
@@ -32,6 +34,16 @@
     width: 80px;
     height: 34px;
     border: none;
+    cursor: pointer;
+}
+
+.movies__search-button:hover {
+    opacity: .6;
+}
+
+.short-movies {
+    display: flex;
+    align-items: center;
 }
 
 .short-movies__title {
@@ -39,4 +51,5 @@
     font-size: 13px;
     font-weight: 400;
     line-height: 18px;
+    margin: 0 14px 0 0;
 }

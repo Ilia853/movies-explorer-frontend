@@ -5,7 +5,7 @@ export default function SearchForm() {
     return (
       <section className="search">
         <form className="movies__search-form">
-          <input type="search" placeholder="Фильм" className="movies__search-input" />
+          <input type="search" placeholder="     Фильм" className="movies__search-input" />
           <button type="submit" className="movies__search-button"></button>
         </form>
         <div className="short-movies">
