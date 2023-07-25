@@ -16,3 +16,12 @@
         margin: 50px auto 0;
     }
 }
+
+@media screen and (max-width: 360px) {
+    .movies-list {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        row-gap: 34px;
+        max-width: 300px;
+        margin: 49px auto 0;
+    }
+}

@@ -59,7 +59,9 @@
     .footer__wrapper {
         flex-direction: column-reverse;
         align-items: center;
-        margin: 0 auto;
+        margin: 21px auto;
+        width: 300px;
+        padding: 0;
     }
     .footer__links {
         display: flex;

@@ -19,7 +19,7 @@ function Header() {
         <h2 className="header__saved-films" style={pathname === "/movies" ? display : displayNone}>Сохранённые фильмы</h2>
       </div>
       <div className="header__sign-links">
-        <div className="header__burger"></div>
+        <div className="header__burger" style={pathname === "/" ? displayNone : display}></div>
         <Link to="/profile">
           <button className="header__account-button" style={pathname === "/movies" ? display : displayNone}></button>
         </Link>
