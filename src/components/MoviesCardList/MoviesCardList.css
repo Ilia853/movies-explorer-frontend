@@ -7,3 +7,12 @@
     padding: 0;
     max-width: 1140px;
 }
+
+@media screen and (max-width: 950px) {
+    .movies-list {
+        grid-template-columns: repeat(auto-fit, minmax(339px, 1fr));
+        gap: 43px 30px;
+        max-width: 708px;
+        margin: 50px auto 0;
+    }
+}

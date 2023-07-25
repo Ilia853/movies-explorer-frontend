@@ -53,3 +53,23 @@
     line-height: 18px;
     margin: 0 14px 0 0;
 }
+
+@media screen and (max-width: 1150px) {
+    .search {
+        flex-direction: column;
+        align-items: center;    
+    }
+    .short-movies {
+        margin-top: 38px;
+    }
+}
+
+@media screen and (max-width: 950px) {
+    .search {
+        max-width: 708px;
+        margin: 60px auto 0;
+    }
+    .movies__search-form {
+        width: 100%;
+    }
+}

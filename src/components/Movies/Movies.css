@@ -21,3 +21,9 @@
 .movies__button-more:hover {
     opacity: .6;
 }
+
+@media screen and (max-width: 950px) {
+    .movies__button-more {
+        margin: 57px auto 100px;
+    }
+}
