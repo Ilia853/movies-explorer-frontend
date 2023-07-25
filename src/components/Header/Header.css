@@ -7,14 +7,6 @@
     font-weight: 500;
 }
 
-.header__display-active {
-    display: inline !important;
-}
-
-.header__display-none {
-    display: none;
-}
-
 .header__logo {
     display: flex;
     width: 38px;
@@ -60,6 +52,19 @@
     margin-right: 70px;
 }
 
+.header__burger {
+    background: url(../../images/icon-burger.svg);
+    width: 44px;
+    height: 44px;
+    margin: 15px 0 0;
+    cursor: pointer;
+    display: none;
+}
+
+.header__burger:hover {
+    opacity: .6;
+}
+
 .header__account-button {
     display: none;
     border: none;
@@ -100,6 +105,15 @@
     }
     .header__logo {
         margin-left: 30px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .header__films, .header__saved-films, .header__account-button {
+        display: none !important;
+    }
+    .header__burger {
+        display: inline;
     }
 }
 
