@@ -13,9 +13,14 @@
     font-size: 12px;
     font-weight: 500;
     line-height: normal;
-    margin: 78px auto 80px;
+    margin: 65px auto 80px;
     padding: 0;
     cursor: pointer;
+}
+
+.movies__button-more_hidden {
+    visibility: hidden;
+    margin: 65px auto 130px;
 }
 
 .movies__button-more:hover {
@@ -25,5 +30,11 @@
 @media screen and (max-width: 950px) {
     .movies__button-more {
         margin: 57px auto 100px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .movies__button-more_hidden {
+        margin: 57px auto 75px;
     }
 }

@@ -1,0 +1,35 @@
+.page_not-found {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.page__not-found {
+    font-size: 140px;
+    font-weight: 400;
+    line-height: normal;
+    margin: 246px auto 0;
+}
+
+.page__not-found-text {   
+    font-size: 16px;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 5px;
+}
+
+.page__not-found-button {
+    color: #3456F3;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: normal;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-top: 184px;
+}
+
+.page__not-found-button:hover {
+    opacity: .6;
+}

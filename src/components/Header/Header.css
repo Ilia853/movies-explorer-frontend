@@ -17,32 +17,32 @@
 }
 
 .header__films {
-    display: none;
-    color: #000;
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 18px;
-    margin-left: 82px;
-    cursor: pointer;
+    display: flex;
 }
 
-.header__saved-films {
+.header__film_active {
+    font-weight: 500;
+}
+
+.header__film {
     display: none;
     color: #000;
     font-size: 13px;
     font-weight: 400;
     line-height: 18px;
-    margin-left: 16px;
-    min-width: 142px;
+    margin: 28px 16px 0 44px;
+    /* min-width: 142px; */
+    max-height: 20px;
     cursor: pointer;
+    text-decoration: none;
 }
 
-.header__films:hover {
+.header__film:hover {
     opacity: .6;
 }
 
-.header__saved-films:hover {
-    opacity: .6;
+.header__film:last-of-type {
+    margin: 28px 0 0;
 }
 
 .header__sign-links {
@@ -58,7 +58,7 @@
     height: 44px;
     margin: 15px 0 0;
     cursor: pointer;
-    display: none;
+    transform: translateX(1000%);
 }
 
 .header__burger:hover {
@@ -109,11 +109,11 @@
 }
 
 @media screen and (max-width: 800px) {
-    .header__films, .header__saved-films, .header__account-button {
+    .header__film, .header__film_active, .header__account-button {
         display: none !important;
     }
     .header__burger {
-        display: inline;
+        transform: translateX(0);
     }
 }
 

@@ -1,21 +1,12 @@
 import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 
-export default function MoviesCardList() {
+export default function MoviesCardList({ cards }) {
   return (
     <ul className="movies-list">
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
+      {cards.map((item) => (
+        <MoviesCard cards={item} key={item._id} />
+      ))}
     </ul>
   );
 }
