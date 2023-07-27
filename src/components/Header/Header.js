@@ -2,7 +2,7 @@ import React from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { display, displayNone } from "../../utils/const";
 
-function Header() {
+function Header({ openBurger }) {
   const location = useLocation();
   const pathname = location.pathname;
 
@@ -24,10 +24,14 @@ function Header() {
         </NavLink>
       </nav>
       <div className="header__sign-links">
-        <div className="header__burger" style={pathname === "/" ? displayNone : display}></div>
+        <div
+          className="header__burger" style={pathname === "/" ? displayNone : display}
+          onClick={openBurger}>
+        </div>
         <Link to="/profile">
           <button className="header__account-button"
-            style={pathname === "/profile" || pathname === "/movies" || pathname === "/saved-movies" ? display : displayNone}></button>
+            style={pathname === "/profile" || pathname === "/movies" || pathname === "/saved-movies" ? display : displayNone}>
+          </button>
         </Link>
         <Link
           className="header__sign-up"

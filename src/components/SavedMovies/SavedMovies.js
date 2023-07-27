@@ -4,10 +4,10 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 
-export default function SavedMovies({ cards }) {
+export default function SavedMovies({ cards, openBurger }) {
   return (
     <section className="saved-movies">
-      <Header />
+      <Header openBurger={openBurger} />
       <SearchForm />
       <MoviesCardList cards={cards.slice(0, 3)} />
       <button className="movies__button-more movies__button-more_hidden">Ещё</button>

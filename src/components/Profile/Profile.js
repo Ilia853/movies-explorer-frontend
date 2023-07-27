@@ -2,10 +2,10 @@ import React from "react";
 import Header from "../Header/Header"
 import { Link } from "react-router-dom";
 
-export default function Profile() {
+export default function Profile({ openBurger }) {
   return (
     <section className="profile">
-      <Header />
+      <Header openBurger={openBurger} />
       <h2 className="profile__title">Привет, Илья!</h2>
       <form className="profile__form">
         <div className="profile__input-wrapper">
