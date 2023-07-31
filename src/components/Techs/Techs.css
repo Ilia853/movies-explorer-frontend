@@ -31,7 +31,8 @@
 .nav-tab__button_type_techs {
     width: 90px;
     height: 60px;
-    cursor: default
+    cursor: default;
+    display: initial;
 }
 
 @media screen and (max-width: 950px) {

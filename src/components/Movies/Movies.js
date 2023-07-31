@@ -7,12 +7,18 @@ import Footer from "../Footer/Footer";
 export default function Movies({ cards, openBurger }) {
 
   return (
-    <section className="movies">
-      <Header openBurger={openBurger} />
-      <SearchForm />
-      <MoviesCardList cards={cards.slice()} />
-      <button className="movies__button-more">Ещё</button>
-      <Footer />
-    </section>
+      <>
+        <Header openBurger={openBurger} />
+        <main className="main">
+          <section className="movies">
+            <SearchForm />
+            <MoviesCardList cards={cards.slice()} />
+            <button className="movies__button-more">Ещё</button>
+          </section>
+        </main>
+        <Footer />
+      </>
+      
+    
   )
 }

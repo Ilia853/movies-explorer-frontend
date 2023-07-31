@@ -23,7 +23,7 @@ export default function Burger({ isOpen, closeBurger }) {
             onClick={closeBurger}>Сохранённые фильмы</NavLink>
         </nav>
         <Link to="/profile">
-          <button className="burger__account-button" onClick={closeBurger}></button>
+          <div className="burger__account-button" onClick={closeBurger}></div>
         </Link>
       </div>
     </section>

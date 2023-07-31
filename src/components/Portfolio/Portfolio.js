@@ -5,24 +5,24 @@ export default function Portfolio() {
     <section className="portfolio">
       <div className="portfolio__wrapper">
         <h2 className="portfolio__title">Портфолио</h2>
-        <div className="portfolio__block">
+        <a className="portfolio__block" href="https://github.com/Ilia853/how-to-learn.git" target="blank">
             <h3 className="portfolio__site">Статичный сайт</h3>
-            <a className="portfolio__link" href="https://github.com/Ilia853/how-to-learn.git" target="blank">
+            <div className="portfolio__link">
               <img className="portfolio__link-img" src={require("../../images/portfolio__link-img.png")} alt="ссылка на проект" />
-            </a>
-        </div>
-        <div className="portfolio__block">
+            </div>
+        </a>
+        <a className="portfolio__block" href="https://github.com/Ilia853/russian-travel.git" target="blank">
             <h3 className="portfolio__site">Адаптивный сайт</h3>
-            <a className="portfolio__link" href="https://github.com/Ilia853/russian-travel.git" target="blank">
+            <div className="portfolio__link">
               <img className="portfolio__link-img" src={require("../../images/portfolio__link-img.png")} alt="ссылка на проект" />
-            </a>
-        </div>
-        <div className="portfolio__block">
+            </div>
+        </a>
+        <a className="portfolio__block" href="https://github.com/Ilia853/react-mesto-api-full-gha.git" target="blank">
             <h3 className="portfolio__site">Одностраничное приложение</h3>
-            <a className="portfolio__link" href="https://github.com/Ilia853/react-mesto-api-full-gha.git" target="blank">
+            <div className="portfolio__link">
               <img className="portfolio__link-img" src={require("../../images/portfolio__link-img.png")} alt="ссылка на проект" />
-            </a>
-        </div>
+            </div>
+        </a>
       </div>
     </section>
   )

@@ -12,15 +12,16 @@ export default function Register() {
       </div>
       <form className="register__form">
         <p className="register__field-name">Имя</p>
-        <input className="register__input register__input_type_name" />
+        <input className="register__input register__input_type_name" required />
         <span className="register__error"></span>
         <p className="register__field-name">E-mail</p>
-        <input className="register__input register__input_type_email" />
+        <input className="register__input register__input_type_email" required />
         <span className="register__error"></span>
         <p className="register__field-name">Пароль</p>
         <input
           className="register__input register__input_type_password"
           type="password"
+          required
         />
         <span className="register__error">Что-то пошло не так...</span>
         <button className="register__form-button">Зарегистрироваться</button>
