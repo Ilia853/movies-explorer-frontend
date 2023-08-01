@@ -4,7 +4,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 
-export default function Movies({ cards, openBurger }) {
+export default function Movies({ movies, openBurger }) {
 
   return (
       <>
@@ -12,7 +12,7 @@ export default function Movies({ cards, openBurger }) {
         <main className="main">
           <section className="movies">
             <SearchForm />
-            <MoviesCardList cards={cards.slice()} />
+            <MoviesCardList movies={movies} />
             <button className="movies__button-more">Ещё</button>
           </section>
         </main>
