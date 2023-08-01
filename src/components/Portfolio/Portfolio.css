@@ -21,6 +21,7 @@
     display: flex;
     justify-content: space-between;
     border-bottom: solid 1px #E8E8E8;;
+    text-decoration: none;
 }
 
 .portfolio__block:last-child {

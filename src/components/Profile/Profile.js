@@ -10,11 +10,11 @@ export default function Profile({ openBurger }) {
       <form className="profile__form">
         <div className="profile__input-wrapper">
           <p className="profile__input-title">Имя</p>
-          <input className="profile__form-input" id="name" />
+          <input className="profile__form-input" id="name" required />
         </div>
         <div className="profile__input-wrapper">
           <p className="profile__input-title">E-mail</p>
-          <input className="profile__form-input" id="email" />
+          <input className="profile__form-input" id="email" required />
         </div>
         <button className="profile__edit" type="submit">Редактировать</button>
       </form>

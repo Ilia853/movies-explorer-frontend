@@ -28,18 +28,18 @@ function Header({ openBurger }) {
           className="header__burger" style={pathname === "/" ? displayNone : display}
           onClick={openBurger}>
         </div>
-        <Link to="/profile">
-          <button className="header__account-button"
-            style={pathname === "/profile" || pathname === "/movies" || pathname === "/saved-movies" ? display : displayNone}>
-          </button>
+        <Link to="/profile"
+          className="header__account-button"
+          style={pathname === "/profile" || pathname === "/movies" || pathname === "/saved-movies" ? display : displayNone}>
         </Link>
         <Link
           className="header__sign-up"
           style={pathname !== "/" ? displayNone : display} to="/sign-up">
           Регистрация
         </Link>
-        <Link to="/sign-in">
-          <button className="header__sign-in" style={pathname !== "/" ? displayNone : display}>Войти</button>
+        <Link to="/sign-in"
+           className="header__sign-in" style={pathname !== "/" ? displayNone : display}>
+          <p className="header__sign-in-text">Войти</p>
         </Link>
       </div>
     </header>
