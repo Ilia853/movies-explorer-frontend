@@ -1,0 +1,88 @@
+.footer {
+    display: flex;
+    flex-direction: column;
+    height: 172px;
+    background: #F8F8F8;
+}
+
+.footer__text {
+    color: #A0A0A0;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 79px auto 0;
+}
+
+.footer__wrapper {
+    display: flex;
+    justify-content: space-between;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: normal;
+    max-width: 1140px;
+    border-top: solid 1px #E8E8E8;
+    margin: 20px 70px;
+    padding: 20px 0 20px;
+}
+
+.footer__praktikum {
+    text-decoration: none;
+    color: #000;
+    margin-right: 20px;
+}
+
+.footer__github {
+    text-decoration: none;
+    color: #000;
+}
+
+@media screen and (max-width: 950px) {
+    .footer__text {
+        margin: 58px auto 0;
+    }
+    .footer__wrapper {
+        margin: 20px 30px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .footer {
+        height: auto;
+    }
+    .footer__text {
+        margin: 59px auto 0;
+        font-size: 12px;
+        line-height: normal;
+    }
+    .footer__wrapper {
+        flex-direction: column-reverse;
+        align-items: center;
+        margin: 21px auto;
+        width: 300px;
+        padding: 0;
+    }
+    .footer__links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .footer__praktikum {
+        margin: 30px auto 0; 
+        font-size: 12px;
+        line-height: normal;
+    }
+    .footer__github {
+        color: #000;
+        font-size: 12px;
+        line-height: normal;
+        margin: 12px auto 0;
+    }
+    .footer__date {
+        color: #A0A0A0;
+        font-size: 12px;
+        line-height: normal;
+        margin: 30px auto 20px;
+    }
+}
