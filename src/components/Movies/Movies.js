@@ -4,14 +4,16 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 
-export default function Movies({ movies, openBurger }) {
+export default function Movies({ movies, openBurger, onFindMovie }) {
 
   return (
       <>
         <Header openBurger={openBurger} />
         <main className="main">
           <section className="movies">
-            <SearchForm />
+            <SearchForm
+            onFindMovie={onFindMovie}
+            />
             <MoviesCardList movies={movies} />
             <button className="movies__button-more">Ещё</button>
           </section>

@@ -4,6 +4,10 @@
     margin: 0 auto;
 }
 
+.movies-card:nth-child(n+13) {
+    display: none;
+}
+
 .movies-card__img {
     width: 360px;
     height: 201px;

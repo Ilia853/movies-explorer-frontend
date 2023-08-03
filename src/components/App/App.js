@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 // import Header from '../Header/Header';
 // import Footer from '../Footer/Footer';
@@ -18,22 +18,32 @@ import moviesApi from "../../utils/MoviesApi";
 function App() {
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const [movies, setMovies] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(false);
+  // const [loggedIn, setLoggedIn] = useState(false);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (loggedIn) {
-    moviesApi.getInitialMovies()
-      .then((moviesData) => {
-        setMovies(moviesData);
-        console.log("moviesData", moviesData);
-      })
-      .catch((err) => {
-        console.log("getMovies", err);
-      });
+  
+    function mountMovies(inputData) {
+      moviesApi.getInitialMovies()
+        .then((moviesData) => {
+          const sortMovies = (movies, input) => {
+            const findedMovies = movies.filter((movie) => {
+              const nameRU = String(movie.nameRU).toLowerCase().trim();
+              const nameEN = String(movie.nameEN).toLowerCase().trim();
+              const inputValue = input.toLowerCase().trim();
+              return (nameEN.indexOf(inputValue) !== -1 || nameRU.indexOf(inputValue) !== -1);
+            })
+            console.log(findedMovies);
+            return findedMovies;
+          }
+          console.log(inputData);
+          const sortedMovies = sortMovies(moviesData, inputData);
+          setMovies(sortedMovies);
+        })
+        .catch((err) => {
+          console.log("getMoviesError", err);
+        });
     }
-  }, [loggedIn])
 
   function openBurger() {
     setIsBurgerOpen(true);
@@ -46,7 +56,7 @@ function App() {
   const handleSubmitLogin = (e) => {
     e.preventDefault();
     navigate("/movies");
-    setLoggedIn(true);
+    // setLoggedIn(true);
   };
 
   return (
@@ -55,7 +65,11 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/sign-up" element={<Register />} />
         <Route path="/sign-in" element={<Login handleSubmitLogin={handleSubmitLogin} />} />
-        <Route path="/movies" element={<Movies movies={movies} openBurger={openBurger} />} />
+        <Route path="/movies" element={<Movies
+          movies={movies}
+          openBurger={openBurger}
+          onFindMovie={mountMovies}
+          />} />
         <Route path="/saved-movies" element={<SavedMovies movies={movies} openBurger={openBurger} />} />
         <Route path="/profile" element={<Profile openBurger={openBurger} />} />
         <Route path="*" element={<PageNotFound />} />
