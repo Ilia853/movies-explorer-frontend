@@ -1,7 +1,13 @@
 import React from "react";
 
 export default function MoviesCard({ movies }) {
-  console.log(movies.trailerLink);
+
+  function getTimeFromMins(mins) {
+    const hours = Math.trunc(mins/60);
+    const minutes = mins % 60;
+    return hours + " ч " + minutes + " м";
+  };
+
   return (
     <li className="movies-card">
       <a href={movies.trailerLink} target="blank">
@@ -13,7 +19,7 @@ export default function MoviesCard({ movies }) {
       <button className="movies-card__button"></button>
       <div className="movies-card__discription">
         <h2 className="movies-card__title">{movies.nameRU}</h2>
-        <span className="movies-card__duration">{movies.duration}</span>
+        <span className="movies-card__duration">{getTimeFromMins(movies.duration)}</span>
       </div>
     </li>
   )

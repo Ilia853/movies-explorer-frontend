@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-export default function SearchForm({ onFindMovie }) {
+export default function SearchForm({ onFindMovie, onShortMovies }) {
   const [movieTitle, setMovieTitle] = useState("");
 
   function handleMoviesSearch(evt) {
@@ -32,7 +32,7 @@ export default function SearchForm({ onFindMovie }) {
       </form>
       <div className="short-movies">
         <p className="short-movies__title">Короткометражки</p>
-        <FilterCheckbox />
+        <FilterCheckbox onShortMovies={onShortMovies} />
       </div>
     </section>
   )

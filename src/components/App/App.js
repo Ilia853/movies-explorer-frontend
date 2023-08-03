@@ -14,36 +14,53 @@ import { Route, Routes } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import moviesApi from "../../utils/MoviesApi";
 
-
 function App() {
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const [movies, setMovies] = useState([]);
+  const [longMovies, setLongMovies] = useState([]);
   // const [loggedIn, setLoggedIn] = useState(false);
 
   const navigate = useNavigate();
 
-  
-    function mountMovies(inputData) {
-      moviesApi.getInitialMovies()
-        .then((moviesData) => {
-          const sortMovies = (movies, input) => {
-            const findedMovies = movies.filter((movie) => {
-              const nameRU = String(movie.nameRU).toLowerCase().trim();
-              const nameEN = String(movie.nameEN).toLowerCase().trim();
-              const inputValue = input.toLowerCase().trim();
-              return (nameEN.indexOf(inputValue) !== -1 || nameRU.indexOf(inputValue) !== -1);
-            })
-            console.log(findedMovies);
-            return findedMovies;
-          }
-          console.log(inputData);
-          const sortedMovies = sortMovies(moviesData, inputData);
-          setMovies(sortedMovies);
-        })
-        .catch((err) => {
-          console.log("getMoviesError", err);
-        });
+  function mountMovies(inputData) {
+    moviesApi
+      .getInitialMovies()
+      .then((moviesData) => {
+        const sortMovies = (movies, input) => {
+          const findedMovies = movies.filter((movie) => {
+            const nameRU = movie.nameRU.toLowerCase().trim();
+            const nameEN = movie.nameEN.toLowerCase().trim();
+            const inputValue = input.toLowerCase().trim();
+            return (
+              nameEN.indexOf(inputValue) !== -1 ||
+              nameRU.indexOf(inputValue) !== -1
+            );
+          });
+          return findedMovies;
+        };
+        const sortedMovies = sortMovies(moviesData, inputData);
+        setMovies(sortedMovies);
+        setLongMovies(sortedMovies);
+      })
+      .catch((err) => {
+        console.log("getMoviesError", err);
+      });
+  }
+
+  function mountShortMovies() {
+    const isChecked = document.getElementById("checkbox");
+    console.log(isChecked.checked);
+    if (isChecked.checked) {
+      const shortMovies = movies.filter((movie) => {
+        const shortMovie = movie.duration < 80;
+        return shortMovie;
+      });
+      setMovies(shortMovies);
+      console.log(shortMovies);
+    } else {
+      setMovies(longMovies);
     }
+  }
 
   function openBurger() {
     setIsBurgerOpen(true);
@@ -64,13 +81,25 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/sign-up" element={<Register />} />
-        <Route path="/sign-in" element={<Login handleSubmitLogin={handleSubmitLogin} />} />
-        <Route path="/movies" element={<Movies
-          movies={movies}
-          openBurger={openBurger}
-          onFindMovie={mountMovies}
-          />} />
-        <Route path="/saved-movies" element={<SavedMovies movies={movies} openBurger={openBurger} />} />
+        <Route
+          path="/sign-in"
+          element={<Login handleSubmitLogin={handleSubmitLogin} />}
+        />
+        <Route
+          path="/movies"
+          element={
+            <Movies
+              movies={movies}
+              openBurger={openBurger}
+              onFindMovie={mountMovies}
+              onShortMovies={mountShortMovies}
+            />
+          }
+        />
+        <Route
+          path="/saved-movies"
+          element={<SavedMovies movies={movies} openBurger={openBurger} />}
+        />
         <Route path="/profile" element={<Profile openBurger={openBurger} />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>

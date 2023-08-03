@@ -14,6 +14,10 @@
     position: relative;
 }
 
+.movies-card__img:hover {
+    opacity: .8;
+}
+
 .movies-card__button {
     position: absolute;
     top: 14px;
