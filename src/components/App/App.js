@@ -18,11 +18,13 @@ function App() {
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const [movies, setMovies] = useState([]);
   const [longMovies, setLongMovies] = useState([]);
+  const [switchPreloader, setSwitchPreloader] = useState(false);
   // const [loggedIn, setLoggedIn] = useState(false);
 
   const navigate = useNavigate();
 
   function mountMovies(inputData) {
+    setSwitchPreloader(true);
     moviesApi
       .getInitialMovies()
       .then((moviesData) => {
@@ -40,6 +42,7 @@ function App() {
         };
         const sortedMovies = sortMovies(moviesData, inputData);
         setMovies(sortedMovies);
+        setSwitchPreloader(false)
         setLongMovies(sortedMovies);
       })
       .catch((err) => {
@@ -47,17 +50,23 @@ function App() {
       });
   }
 
+  const checkbox = document.querySelector(".filter-checkbox-icon");
+  function toggleCheckBox() {
+    checkbox.classList.toggle('filter-checkbox-icon_active');
+  }
+
   function mountShortMovies() {
     const isChecked = document.getElementById("checkbox");
-    console.log(isChecked.checked);
     if (isChecked.checked) {
+      toggleCheckBox();
       const shortMovies = movies.filter((movie) => {
         const shortMovie = movie.duration < 80;
         return shortMovie;
       });
       setMovies(shortMovies);
-      console.log(shortMovies);
+      // console.log(shortMovies);
     } else {
+      toggleCheckBox();
       setMovies(longMovies);
     }
   }
@@ -93,12 +102,15 @@ function App() {
               openBurger={openBurger}
               onFindMovie={mountMovies}
               onShortMovies={mountShortMovies}
+              switchPreloader={switchPreloader} 
             />
           }
         />
         <Route
           path="/saved-movies"
-          element={<SavedMovies movies={movies} openBurger={openBurger} />}
+          element={<SavedMovies
+          movies={movies}
+          openBurger={openBurger} />}
         />
         <Route path="/profile" element={<Profile openBurger={openBurger} />} />
         <Route path="*" element={<PageNotFound />} />

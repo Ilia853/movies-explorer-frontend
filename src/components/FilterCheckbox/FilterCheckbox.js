@@ -2,7 +2,6 @@ import React from "react";
 
 export default function FilterCheckbox({ onShortMovies }) {
   
-  
   return (
     <div className="checkbox">
       <div className="filter-checkbox-icon"></div>
