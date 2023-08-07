@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function Login({ handleSubmitLogin }) {
+export default function Login({ handleSubmitLogin, handleEmailChange, handlePasswordChange }) {
   return (
     <section className="login">
       <div className="register__header-logo-wrapper">
@@ -12,13 +12,18 @@ export default function Login({ handleSubmitLogin }) {
       </div>
       <form className="register__form">
         <p className="register__field-name">E-mail</p>
-        <input className="register__input register__input_type_email" required />
+        <input
+          className="register__input register__input_type_email"
+          required
+          onChange={handleEmailChange}
+        />
         <span className="register__error"></span>
         <p className="register__field-name">Пароль</p>
         <input
           className="register__input register__input_type_password"
           type="password"
           required
+          onChange={handlePasswordChange}
         />
         <span className="register__error"></span>
         <button className="register__form-button register__form-button_type_login" onClick={handleSubmitLogin}>Войти</button>

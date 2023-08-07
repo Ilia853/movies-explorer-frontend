@@ -13,13 +13,18 @@ import Burger from "../Burger/Burger";
 import { Route, Routes } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import moviesApi from "../../utils/MoviesApi";
+import * as auth from "../../utils/auth";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const [movies, setMovies] = useState([]);
   const [longMovies, setLongMovies] = useState([]);
   const [switchPreloader, setSwitchPreloader] = useState(false);
-  // const [loggedIn, setLoggedIn] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const navigate = useNavigate();
 
@@ -79,40 +84,115 @@ function App() {
     setIsBurgerOpen(false);
   }
 
-  const handleSubmitLogin = (e) => {
-    e.preventDefault();
-    navigate("/movies");
-    // setLoggedIn(true);
+  // const handleSubmitLogin = (e) => {
+  //   e.preventDefault();
+  //   navigate("/movies");
+  //   // setLoggedIn(true);
+  // };
+
+  function handleNameChange(evt) {
+    setName(evt.target.value);
+  }
+
+  function handleEmailChange(evt) {
+    setEmail(evt.target.value);
+}
+
+  function handlePasswordChange(evt) {
+    setPassword(evt.target.value);
+  }
+
+  function handleLogin() {
+    setLoggedIn(true);
+  }
+
+  const handleSubmitLogin = (evt) => {
+    evt.preventDefault();
+    if (!email || !password) {
+      console.log("Введите почту и пароль");
+      return;
+    }
+    auth.authorize(email, password)
+      .then((data) => {
+        if (data.token) {
+          setPassword("");
+          handleLogin();
+          navigate("/movies", { replace: true });
+        }
+      })
+      .catch((err) => {
+        console.log("Login", err);
+        console.log("Что-то пошло не так! Попробуйте ещё раз.");
+      });
   };
+
+  const handleSubmitRegister = (e) => {
+    e.preventDefault();
+    auth.register(name, email, password)
+      .then((res) => {
+        if (res) {
+          navigate("/sign-in", { replace: true });
+        }
+      })
+      .catch((err) => {
+        console.log("Error", err);
+      });
+};
 
   return (
     <div>
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/sign-up" element={<Register />} />
+        <Route
+          path="/sign-up"
+          element={
+            <Register
+              submitRegister={handleSubmitRegister}
+              handleNameChange={handleNameChange}
+              handleEmailChange={handleEmailChange}
+              handlePasswordChange={handlePasswordChange}
+            />
+          }
+        />
         <Route
           path="/sign-in"
-          element={<Login handleSubmitLogin={handleSubmitLogin} />}
+          element={
+            <Login
+              handleSubmitLogin={handleSubmitLogin}
+              handleEmailChange={handleEmailChange}
+              handlePasswordChange={handlePasswordChange}
+            />
+          }
         />
         <Route
           path="/movies"
           element={
-            <Movies
+            <ProtectedRoute
+              element={Movies}
               movies={movies}
               openBurger={openBurger}
               onFindMovie={mountMovies}
               onShortMovies={mountShortMovies}
-              switchPreloader={switchPreloader} 
+              switchPreloader={switchPreloader}
+              loggedIn={loggedIn}
             />
           }
         />
         <Route
           path="/saved-movies"
-          element={<SavedMovies
-          movies={movies}
-          openBurger={openBurger} />}
+          element={
+            <ProtectedRoute
+              element={SavedMovies}
+              movies={movies}
+              openBurger={openBurger}
+              loggedIn={loggedIn}
+            />
+          }
         />
-        <Route path="/profile" element={<Profile openBurger={openBurger} />} />
+        <Route
+          path="/profile"
+          element={<ProtectedRoute element={Profile} openBurger={openBurger} />}
+        />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Burger isOpen={isBurgerOpen} closeBurger={closeBurger} />

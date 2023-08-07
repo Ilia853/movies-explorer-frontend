@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function Register() {
+export default function Register({ submitRegister, handleNameChange, handleEmailChange, handlePasswordChange }) {
   return (
     <section className="register">
       <div className="register__header-logo-wrapper">
@@ -10,18 +10,27 @@ export default function Register() {
         </Link>
         <h2 className="register__title">Добро пожаловать!</h2>
       </div>
-      <form className="register__form">
+      <form className="register__form" onSubmit={submitRegister}>
         <p className="register__field-name">Имя</p>
-        <input className="register__input register__input_type_name" required />
+        <input
+          className="register__input register__input_type_name"
+          required
+          onChange={handleNameChange}
+        />
         <span className="register__error"></span>
         <p className="register__field-name">E-mail</p>
-        <input className="register__input register__input_type_email" required />
+        <input
+          className="register__input register__input_type_email"
+          required
+          onChange={handleEmailChange}
+        />
         <span className="register__error"></span>
         <p className="register__field-name">Пароль</p>
         <input
           className="register__input register__input_type_password"
           type="password"
           required
+          onChange={handlePasswordChange}
         />
         <span className="register__error">Что-то пошло не так...</span>
         <button className="register__form-button">Зарегистрироваться</button>
