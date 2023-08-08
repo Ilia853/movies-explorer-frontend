@@ -259,7 +259,7 @@ function App() {
             element={
               <ProtectedRoute
                 element={SavedMovies}
-                movies={movies}
+                // movies={createdMovies}
                 openBurger={openBurger}
                 loggedIn={loggedIn}
               />

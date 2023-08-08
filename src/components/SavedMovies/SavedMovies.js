@@ -11,7 +11,7 @@ export default function SavedMovies({ movies, openBurger }) {
       <main className="main">
         <section className="saved-movies">
           <SearchForm />
-          <MoviesCardList movies={movies.slice(0, 3)} />
+          <MoviesCardList movies={movies} />
           <button className="movies__button-more movies__button-more_hidden">Ещё</button>
         </section>
       </main>
