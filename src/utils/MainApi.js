@@ -1,4 +1,4 @@
-import { BASE_URL } from "./const";
+import { BASE_URL, MOVIES_URL } from "./const";
 
 class MainApi {
   constructor({ baseUrl, headers }) {
@@ -14,6 +14,36 @@ class MainApi {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: this._headers,
+    }).then(this._checkResponse);
+  }
+
+  editProfile(name, email) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name,
+        email,
+      }),
+    }).then(this._checkResponse);
+  }
+
+  createMovie(movie) {
+    return fetch(`${this._baseUrl}/movies`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        country: movie.country,
+        director: movie.director,
+        duration: movie.duration,
+        year: movie.year,
+        description: movie.description,
+        image: `${MOVIES_URL}${movie.image.url}`,
+        trailerLink: movie.trailerLink,
+        movieId: movie.id,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN,
+      }),
     }).then(this._checkResponse);
   }
 

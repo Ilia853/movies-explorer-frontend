@@ -10,8 +10,7 @@ import PageNotFound from "../PageNotFound/PageNotFound";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import Burger from "../Burger/Burger";
-import { Route, Routes } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import moviesApi from "../../utils/MoviesApi";
 import * as auth from "../../utils/auth";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
@@ -28,6 +27,7 @@ function App() {
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [createdMovies, setCreatedMovies] = useState([]);
 
   const navigate = useNavigate();
 
@@ -44,6 +44,27 @@ function App() {
   //       });
   //   }
   // }, [loggedIn]);
+
+  function handleUpdateUser(userData) {
+    mainApi
+      .editProfile(userData.name, userData.email)
+      .then((userData) => {
+        setCurrentUser(userData);
+      })
+      .catch((err) => {
+        console.log("editProfile", err);
+      });
+  }
+
+  function handleCreateMovie(movie) {
+    mainApi.createMovie(movie)
+        .then((movie) => {
+            setCreatedMovies([movie, ...createdMovies]);
+        })
+        .catch((err) => {
+            console.log("createMovieError", err);
+        });
+}
 
   function mountMovies(inputData) {
     setSwitchPreloader(true);
@@ -75,7 +96,7 @@ function App() {
 
   function toggleCheckBox() {
     const checkbox = document.querySelector(".filter-checkbox-icon");
-    checkbox.classList.toggle('filter-checkbox-icon_active');
+    checkbox.classList.toggle("filter-checkbox-icon_active");
   }
 
   function mountShortMovies() {
@@ -83,7 +104,7 @@ function App() {
     if (isChecked.checked) {
       toggleCheckBox();
       const shortMovies = movies.filter((movie) => {
-        const shortMovie = movie.duration < 80;
+        const shortMovie = movie.duration < 40;
         return shortMovie;
       });
       setMovies(shortMovies);
@@ -92,6 +113,10 @@ function App() {
       toggleCheckBox();
       setMovies(longMovies);
     }
+  }
+
+  function clearMovies() {
+    setMovies([]);
   }
 
   function openBurger() {
@@ -143,7 +168,7 @@ function App() {
 
   function handleEmailChange(evt) {
     setEmail(evt.target.value);
-}
+  }
 
   function handlePasswordChange(evt) {
     setPassword(evt.target.value);
@@ -159,7 +184,8 @@ function App() {
       console.log("Введите почту и пароль");
       return;
     }
-    auth.authorize(email, password)
+    auth
+      .authorize(email, password)
       .then((data) => {
         if (data.token) {
           setPassword("");
@@ -175,7 +201,8 @@ function App() {
 
   const handleSubmitRegister = (e) => {
     e.preventDefault();
-    auth.register(name, email, password)
+    auth
+      .register(name, email, password)
       .then((res) => {
         if (res) {
           navigate("/sign-in", { replace: true });
@@ -184,7 +211,7 @@ function App() {
       .catch((err) => {
         console.log("Error", err);
       });
-};
+  };
 
   return (
     <div>
@@ -223,6 +250,7 @@ function App() {
                 onShortMovies={mountShortMovies}
                 switchPreloader={switchPreloader}
                 loggedIn={loggedIn}
+                handleCreateMovie={handleCreateMovie}
               />
             }
           />
@@ -244,6 +272,8 @@ function App() {
                 element={Profile}
                 openBurger={openBurger}
                 loggedIn={loggedIn}
+                clearMovies={clearMovies}
+                handleUpdateUser={handleUpdateUser}
               />
             }
           />
