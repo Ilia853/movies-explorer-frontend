@@ -144,7 +144,6 @@ function App() {
       }
       return movie;
     })
-    console.log(likedMovies);
     return likedMovies;
   }
 
