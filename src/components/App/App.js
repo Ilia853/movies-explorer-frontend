@@ -120,6 +120,7 @@ function App() {
       .getInitialMovies()
       .then((moviesData) => {
         const sortedMovies = sortMovies(moviesData, inputData);
+        setLikedMovies(createdMovies)
         saveInStorage(sortedMovies, "searchedMovies");
         setMovies(sortedMovies);
         setLongMovies(sortedMovies);
@@ -129,6 +130,24 @@ function App() {
         console.log("getMoviesError", err);
       });
   }
+
+  function setLikedMovies(moviesData) {
+    const likedMovies = moviesData.map((movie) => {
+      const likedMovie = movies.some((m) => {
+        return movie.movieId === m.id;
+      })
+      console.log(likedMovie);
+      if(likedMovie) {
+        movie.isLiked = true;
+      } else {
+        movie.isLiked =false;
+      }
+      return movie;
+    })
+    console.log(likedMovies);
+    return likedMovies;
+  }
+
 
   function searchSavedMovies(inputData) {
     setSwitchPreloader(true);
@@ -151,18 +170,20 @@ function App() {
     } else {
       toggleCheckBox();
       setMovies(longMovies);
-    }}
+    }
+  }
 
-    function mountCreatedShortMovies() {
-      const isChecked = document.getElementById("checkbox");
-      if (isChecked.checked) {
-        toggleCheckBox();
-        shortMovies(createdMovies)
-        setCreatedMovies(shortMovies);
-      } else {
-        toggleCheckBox();
-        setCreatedMovies(longCreatedMovies);
-      }}
+  function mountCreatedShortMovies() {
+    const isChecked = document.getElementById("checkbox");
+    if (isChecked.checked) {
+      toggleCheckBox();
+      shortMovies(createdMovies)
+      setCreatedMovies(shortMovies);
+    } else {
+      toggleCheckBox();
+      setCreatedMovies(longCreatedMovies);
+    }
+  }
 
   function clearMovies() {
     setMovies([]);

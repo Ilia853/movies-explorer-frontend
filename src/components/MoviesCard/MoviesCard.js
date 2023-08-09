@@ -33,13 +33,14 @@ export default function MoviesCard({ movies, handleCreateMovie, handleDeleteMovi
               ? `${MOVIES_URL}${movies.image.url}`
               : movies.image
           }
-          alt="Кадр из фильма"
+          alt={movies.description}
         />
       </a>
       <button
         className={
           pathname === "/saved-movies"
             ? "movies-card__button movies-card__button_type_del"
+            : "movies-card__button" || movies.isLiked ? "movies-card__button movies-card__button_type_like"
             : "movies-card__button"
         }
         onClick={takeMoviesData}
