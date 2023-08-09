@@ -13,9 +13,7 @@ export default function SearchForm({ onFindMovie, onShortMovies }) {
   
     onFindMovie(movieTitle);
     setMovieTitle("")
-
-    console.log(movieTitle);
-}
+  }
   
   return (
     <section className="search">

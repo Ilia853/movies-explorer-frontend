@@ -28,6 +28,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [createdMovies, setCreatedMovies] = useState([]);
+  const [longCreatedMovies, setLongCreatedMovies] = useState([]);
 
   const navigate = useNavigate();
 
@@ -44,6 +45,20 @@ function App() {
   //       });
   //   }
   // }, [loggedIn]);
+
+  useEffect(() => {
+    if (loggedIn) {
+      mainApi
+        .getMovies()
+        .then((movies) => {
+          setCreatedMovies(movies);
+          setLongCreatedMovies(movies);
+        })
+        .catch((err) => {
+          console.log("getSavedMoviesError", err);
+        });
+    }
+  }, [loggedIn]);
 
   function handleUpdateUser(userData) {
     mainApi
@@ -64,27 +79,48 @@ function App() {
         .catch((err) => {
             console.log("createMovieError", err);
         });
-}
+  }
 
-  function mountMovies(inputData) {
+  function handleDeleteMovie(id) {
+    mainApi.delMovie(id)
+        .then(() => {
+            setCreatedMovies((movies) => movies.filter((m) => m._id !== id));
+        })
+        .catch((err) => {
+            console.log("deletingMovieError", err);
+        })
+  }
+
+  function saveInStorage(movies, where) {
+    localStorage.setItem(where, JSON.stringify(movies));
+  }
+
+  const sortMovies = (movies, input) => {
+    const findedMovies = movies.filter((movie) => {
+      const nameRU = movie.nameRU.toLowerCase().trim();
+      const nameEN = movie.nameEN.toLowerCase().trim();
+      const inputValue = input.toLowerCase().trim();
+      return (
+        nameEN.indexOf(inputValue) !== -1 ||
+        nameRU.indexOf(inputValue) !== -1
+      );
+    });
+    return findedMovies;
+  };
+
+  function toggleCheckBox() {
+    const checkbox = document.querySelector(".filter-checkbox-icon");
+    checkbox.classList.toggle("filter-checkbox-icon_active");
+  }
+
+  function searchMovies(inputData) {
+    clearMovies();
     setSwitchPreloader(true);
     moviesApi
       .getInitialMovies()
       .then((moviesData) => {
-        const sortMovies = (movies, input) => {
-          const findedMovies = movies.filter((movie) => {
-            const nameRU = movie.nameRU.toLowerCase().trim();
-            const nameEN = movie.nameEN.toLowerCase().trim();
-            const inputValue = input.toLowerCase().trim();
-            return (
-              nameEN.indexOf(inputValue) !== -1 ||
-              nameRU.indexOf(inputValue) !== -1
-            );
-          });
-          return findedMovies;
-        };
         const sortedMovies = sortMovies(moviesData, inputData);
-        localStorage.setItem("searchedMovies", JSON.stringify(sortedMovies));
+        saveInStorage(sortedMovies, "searchedMovies");
         setMovies(sortedMovies);
         setLongMovies(sortedMovies);
         setSwitchPreloader(false);
@@ -94,26 +130,39 @@ function App() {
       });
   }
 
-  function toggleCheckBox() {
-    const checkbox = document.querySelector(".filter-checkbox-icon");
-    checkbox.classList.toggle("filter-checkbox-icon_active");
+  function searchSavedMovies(inputData) {
+    setSwitchPreloader(true);
+    const sortedMovies = sortMovies(createdMovies, inputData);
+    setCreatedMovies(sortedMovies);
+    setSwitchPreloader(false);
   }
+
+  const shortMovies = (movies) => movies.filter((movie) => {
+    const shortMovie = movie.duration < 40;
+    return shortMovie;
+  });
 
   function mountShortMovies() {
     const isChecked = document.getElementById("checkbox");
     if (isChecked.checked) {
       toggleCheckBox();
-      const shortMovies = movies.filter((movie) => {
-        const shortMovie = movie.duration < 40;
-        return shortMovie;
-      });
+      shortMovies(movies)
       setMovies(shortMovies);
-      // console.log(shortMovies);
     } else {
       toggleCheckBox();
       setMovies(longMovies);
-    }
-  }
+    }}
+
+    function mountCreatedShortMovies() {
+      const isChecked = document.getElementById("checkbox");
+      if (isChecked.checked) {
+        toggleCheckBox();
+        shortMovies(createdMovies)
+        setCreatedMovies(shortMovies);
+      } else {
+        toggleCheckBox();
+        setCreatedMovies(longCreatedMovies);
+      }}
 
   function clearMovies() {
     setMovies([]);
@@ -127,14 +176,8 @@ function App() {
     setIsBurgerOpen(false);
   }
 
-  // const handleSubmitLogin = (e) => {
-  //   e.preventDefault();
-  //   navigate("/movies");
-  //   // setLoggedIn(true);
-  // };
   useEffect(() => {
     tokenCheck();
-    console.log(localStorage);
   }, []);
 
   function tokenCheck() {
@@ -150,7 +193,7 @@ function App() {
               name: res.name,
             };
             setCurrentUser(userData);
-            setLoggedIn(true);
+            handleLogin();
             navigate("/movies", { replace: true });
             setMovies(JSON.parse(localStorage.getItem("searchedMovies")));
             setLongMovies(JSON.parse(localStorage.getItem("searchedMovies")));
@@ -246,7 +289,7 @@ function App() {
                 element={Movies}
                 movies={movies}
                 openBurger={openBurger}
-                onFindMovie={mountMovies}
+                onFindMovie={searchMovies}
                 onShortMovies={mountShortMovies}
                 switchPreloader={switchPreloader}
                 loggedIn={loggedIn}
@@ -259,9 +302,12 @@ function App() {
             element={
               <ProtectedRoute
                 element={SavedMovies}
-                // movies={createdMovies}
+                movies={createdMovies}
                 openBurger={openBurger}
                 loggedIn={loggedIn}
+                onFindMovie={searchSavedMovies}
+                onShortMovies={mountCreatedShortMovies}
+                handleDeleteMovie={handleDeleteMovie}
               />
             }
           />

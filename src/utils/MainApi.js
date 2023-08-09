@@ -48,6 +48,21 @@ class MainApi {
     }).then(this._checkResponse);
   }
 
+  getMovies() {
+    return fetch(`${this._baseUrl}/movies`, {
+      method: "GET",
+      headers: this._headers,
+    }).then(this._checkResponse);
+  }
+
+  delMovie(movieId) {
+    return fetch(`${this._baseUrl}/movies/${movieId}`, {
+        method: "DELETE",
+        headers: this._headers,
+    })
+        .then(this._checkResponse)
+  }
+
   setToken(token) {
     this._headers = {
       ...this._headers,

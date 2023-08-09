@@ -18,7 +18,7 @@ export default function Movies({
       <Header openBurger={openBurger} />
       <main className="main">
         <section className="movies">
-          <SearchForm onFindMovie={onFindMovie} onShortMovies={onShortMovies} />
+          <SearchForm onFindMovie={onFindMovie} onShortMovies={onShortMovies} movies={movies} />
           <Preloader switchPreloader={switchPreloader} />
           <MoviesCardList
             movies={movies}

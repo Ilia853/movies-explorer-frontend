@@ -33,6 +33,12 @@
     opacity: .6;
 }
 
+.movies-card__button_type_del {
+    background: url(../../images/delCard.png);
+    width: 21px;
+    height: 21px;
+}
+
 .movies-card__discription {
     display: flex;
     justify-content: space-between;
