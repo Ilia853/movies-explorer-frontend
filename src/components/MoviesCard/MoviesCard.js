@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { MOVIES_URL } from "../../utils/const";
 import { useLocation } from "react-router-dom";
 
@@ -37,12 +37,9 @@ export default function MoviesCard({ movies, handleCreateMovie, handleDeleteMovi
         />
       </a>
       <button
-        className={
-          pathname === "/saved-movies"
-            ? "movies-card__button movies-card__button_type_del"
-            : "movies-card__button" || movies.isLiked ? "movies-card__button movies-card__button_type_like"
-            : "movies-card__button"
-        }
+        className={movies.isLiked ? "movies-card__button movies-card__button_type_like" : "movies-card__button"
+          && pathname === "/saved-movies" ? "movies-card__button movies-card__button_type_del"
+          : "movies-card__button"}
         onClick={takeMoviesData}
       ></button>
       <div className="movies-card__discription">

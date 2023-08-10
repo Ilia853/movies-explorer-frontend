@@ -120,10 +120,10 @@ function App() {
       .getInitialMovies()
       .then((moviesData) => {
         const sortedMovies = sortMovies(moviesData, inputData);
-        setLikedMovies(createdMovies)
-        saveInStorage(sortedMovies, "searchedMovies");
-        setMovies(sortedMovies);
-        setLongMovies(sortedMovies);
+        const finalMovies = setLikedMovies(sortedMovies ,createdMovies)
+        saveInStorage(finalMovies, "searchedMovies");
+        setMovies(finalMovies);
+        setLongMovies(finalMovies);
         setSwitchPreloader(false);
       })
       .catch((err) => {
@@ -131,10 +131,11 @@ function App() {
       });
   }
 
-  function setLikedMovies(moviesData) {
+  function setLikedMovies(moviesData, createMoviesData) {
+    console.log(movies);
     const likedMovies = moviesData.map((movie) => {
-      const likedMovie = movies.some((m) => {
-        return movie.movieId === m.id;
+      const likedMovie = createMoviesData.some((m) => {
+        return m.movieId === movie.id
       })
       console.log(likedMovie);
       if(likedMovie) {
@@ -144,6 +145,7 @@ function App() {
       }
       return movie;
     })
+    console.log("likedMovies", likedMovies);
     return likedMovies;
   }
 
