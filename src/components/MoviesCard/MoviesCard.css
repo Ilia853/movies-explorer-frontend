@@ -46,6 +46,10 @@
     cursor: auto;
 }
 
+.movies-card__button_type_like:hover {
+    opacity: 1;
+}
+
 .movies-card__discription {
     display: flex;
     justify-content: space-between;

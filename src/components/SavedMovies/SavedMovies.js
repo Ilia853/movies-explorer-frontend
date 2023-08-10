@@ -12,7 +12,7 @@ export default function SavedMovies({ movies, openBurger, onFindMovie, onShortMo
         <section className="saved-movies">
           <SearchForm movies={movies} onFindMovie={onFindMovie} onShortMovies={onShortMovies} />
           <MoviesCardList movies={movies} handleDeleteMovie={handleDeleteMovie} />
-          <button className="movies__button-more movies__button-more_hidden">Ещё</button>
+          <button className="movies__button-more movies__button-more_type_hidden">Ещё</button>
         </section>
       </main>
       <Footer />

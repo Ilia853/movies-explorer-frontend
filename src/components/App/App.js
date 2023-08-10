@@ -29,6 +29,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [createdMovies, setCreatedMovies] = useState([]);
   const [longCreatedMovies, setLongCreatedMovies] = useState([]);
+  // const [finalyMovies, setFinalyMovies] = useState([]);
 
   const navigate = useNavigate();
 
@@ -72,14 +73,25 @@ function App() {
   }
 
   function handleCreateMovie(movie) {
-    mainApi.createMovie(movie)
+    if (createdMovies.some((m) => m.movieId === movie.id)) {
+      console.log("Такой фильм уже в вашей коллекции"); // message that movie alredy in DB
+    } else {
+      mainApi
+        .createMovie(movie)
         .then((movie) => {
-            setCreatedMovies([movie, ...createdMovies]);
+          setCreatedMovies([movie, ...createdMovies]);
         })
         .catch((err) => {
-            console.log("createMovieError", err);
+          console.log("createMovieError", err);
         });
+    }
   }
+
+  useEffect(() => {
+    const finalMovies = setLikedMovies(movies ,createdMovies)
+    setMovies(finalMovies);
+    setLongMovies(finalMovies);
+  }, [createdMovies])
 
   function handleDeleteMovie(id) {
     mainApi.delMovie(id)
@@ -132,12 +144,10 @@ function App() {
   }
 
   function setLikedMovies(moviesData, createMoviesData) {
-    console.log(movies);
     const likedMovies = moviesData.map((movie) => {
       const likedMovie = createMoviesData.some((m) => {
         return m.movieId === movie.id
       })
-      console.log(likedMovie);
       if(likedMovie) {
         movie.isLiked = true;
       } else {
@@ -145,7 +155,6 @@ function App() {
       }
       return movie;
     })
-    console.log("likedMovies", likedMovies);
     return likedMovies;
   }
 
