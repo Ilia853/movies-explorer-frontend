@@ -10,14 +10,21 @@ export default function SearchForm({ onFindMovie, onShortMovies }) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-  
-    onFindMovie(movieTitle);
-    setMovieTitle("")
+    if(movieTitle !== "") {
+      onFindMovie(movieTitle);
+      setMovieTitle("")
+    } else {
+      setMovieTitle("Поле не должно быть пустым");
+      setTimeout(() => {
+        setMovieTitle("");
+      }, 1000)
+    }
+    
   }
   
   return (
     <section className="search">
-      <form className="movies__search-form" onSubmit={handleSubmit} >
+      <form className="movies__search-form" onSubmit={handleSubmit} noValidate >
         <input
           type="search"
           placeholder="Фильм"
@@ -26,6 +33,7 @@ export default function SearchForm({ onFindMovie, onShortMovies }) {
           onChange={handleMoviesSearch}
           value={movieTitle}
         />
+        <span className="movies__search-error"></span>
         <button type="submit" className="movies__search-button"></button>
       </form>
       <div className="short-movies">

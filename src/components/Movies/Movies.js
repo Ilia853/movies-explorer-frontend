@@ -14,7 +14,6 @@ export default function Movies({
   handleCreateMovie,
 }) {
   const [moviesAmount, setMoviesAmount] = useState(12);
-  // const [windowSize] = useState(window.innerWidth)
 
   function handleMovieAmount() {
     if (window.innerWidth > 1139) {

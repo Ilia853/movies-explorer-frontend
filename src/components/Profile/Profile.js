@@ -35,11 +35,20 @@ export default function Profile({
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    handleUpdateUser({
-      name,
-      email,
-    });
-    navigate("/movies", { replace: true });
+    if(currentUser.name === name || currentUser.email === email) {
+      // alert("введенные данные совпадают с текущими")
+      const profileError = document.querySelector(".profile__error")
+      profileError.textContent = "введенные данные совпадают с текущими"
+      setTimeout(() => {
+        profileError.textContent = ""
+      }, 1500);
+    } else {
+      handleUpdateUser({
+        name,
+        email,
+      });
+      navigate("/movies", { replace: true });
+    }
   }
 
   React.useEffect(() => {
@@ -51,6 +60,7 @@ export default function Profile({
     <section className="profile">
       <Header openBurger={openBurger} />
       <h2 className="profile__title">Привет, {name}!</h2>
+      <span className="profile__error"></span>
       <form className="profile__form" onSubmit={handleSubmit}>
         <div className="profile__input-wrapper">
           <p className="profile__input-title">Имя</p>
