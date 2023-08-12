@@ -7,10 +7,11 @@ export default function Profile({
   openBurger,
   clearMovies,
   handleUpdateUser,
+  values,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState(values.name);
+  const [email, setEmail] = useState(values.email);
   const navigate = useNavigate();
 
 
@@ -32,10 +33,13 @@ export default function Profile({
     localStorage.removeItem("searchedMovies");
     clearMovies();
   }
+  console.log(currentUser.name === name);
 
   function handleSubmit(evt) {
+    console.log(currentUser.name, name);
+    console.log(currentUser.name === name || currentUser.email === email);
     evt.preventDefault();
-    if(currentUser.name !== name && currentUser.email === email) {
+    if(currentUser.name === name && currentUser.email === email) {
       const profileError = document.querySelector(".profile__error")
       profileError.textContent = "введенные данные совпадают с текущими"
       setTimeout(() => {
