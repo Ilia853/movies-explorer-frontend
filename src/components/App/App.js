@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-// import Header from '../Header/Header';
-// import Footer from '../Footer/Footer';
 import Main from "../Main/Main";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
@@ -16,36 +14,48 @@ import * as auth from "../../utils/auth";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import mainApi from "../../utils/MainApi";
+import Popup from "../Popup/Popup";
 
 function App() {
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const [movies, setMovies] = useState([]);
   const [longMovies, setLongMovies] = useState([]);
   const [switchPreloader, setSwitchPreloader] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [createdMovies, setCreatedMovies] = useState([]);
   const [longCreatedMovies, setLongCreatedMovies] = useState([]);
-  // const [finalyMovies, setFinalyMovies] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [popupMessage, setPopupMessage] =useState("");
+  const [values, setValues] = useState({});
+  const [errors, setErrors] = useState({});
+  const [isValid, setIsValid] = useState(false);
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     mainApi
-  //       .getProfile()
-  //       .then((userData) => {
-  //         console.log("USERDATA", userData);
-  //         setCurrentUser(userData);
-  //       })
-  //       .catch((err) => {
-  //         console.log("userDataError", err);
-  //       });
-  //   }
-  // }, [loggedIn]);
+  const handleChange = (event) => {
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
+    setValues({...values, [name]: value});
+    setErrors({...errors, [name]: target.validationMessage });
+    setIsValid(target.closest(".register__form").checkValidity());
+  };
+
+  const activeButton = (isValid) => {
+    if(isValid) {
+      const button = document.querySelector(".register__form-button")
+      if(button) {
+        button.removeAttribute("disabled")
+      }
+    } else {
+      return
+    }
+  }
+
+  useEffect(() => {
+    activeButton(isValid);
+  }, [isValid])
 
   useEffect(() => {
     if (loggedIn) {
@@ -74,7 +84,8 @@ function App() {
 
   function handleCreateMovie(movie) {
     if (createdMovies.some((m) => m.movieId === movie.id)) {
-      console.log("Такой фильм уже в вашей коллекции"); // message that movie alredy in DB
+      setIsOpen(true)
+      setPopupMessage("Такой фильм уже в вашей коллекции")
     } else {
       mainApi
         .createMovie(movie)
@@ -94,6 +105,7 @@ function App() {
   }, [createdMovies])
 
   function handleDeleteMovie(id) {
+    console.log(id);
     mainApi.delMovie(id)
         .then(() => {
             setCreatedMovies((movies) => movies.filter((m) => m._id !== id));
@@ -132,11 +144,17 @@ function App() {
       .getInitialMovies()
       .then((moviesData) => {
         const sortedMovies = sortMovies(moviesData, inputData);
-        const finalMovies = setLikedMovies(sortedMovies ,createdMovies)
-        saveInStorage(finalMovies, "searchedMovies");
-        setMovies(finalMovies);
-        setLongMovies(finalMovies);
-        setSwitchPreloader(false);
+        if(sortedMovies.length === 0) {
+          setSwitchPreloader(false);
+          setIsOpen(true);
+          setPopupMessage("Ничего не нашлось, попробуйте ввести другой запрос.")
+        } else {
+          const finalMovies = setLikedMovies(sortedMovies ,createdMovies)
+          saveInStorage(finalMovies, "searchedMovies");
+          setMovies(finalMovies);
+          setLongMovies(finalMovies);
+          setSwitchPreloader(false);
+        }
       })
       .catch((err) => {
         console.log("getMoviesError", err);
@@ -236,33 +254,20 @@ function App() {
     }
   }
 
-  function handleNameChange(evt) {
-    setName(evt.target.value);
-  }
-
-  function handleEmailChange(evt) {
-    setEmail(evt.target.value);
-  }
-
-  function handlePasswordChange(evt) {
-    setPassword(evt.target.value);
-  }
-
   function handleLogin() {
     setLoggedIn(true);
   }
 
   const handleSubmitLogin = (evt) => {
     evt.preventDefault();
-    if (!email || !password) {
+    if (!values.email || !values.password) {
       console.log("Введите почту и пароль");
       return;
     }
     auth
-      .authorize(email, password)
+      .authorize(values.email, values.password)
       .then((data) => {
         if (data.token) {
-          setPassword("");
           handleLogin();
           navigate("/movies", { replace: true });
         }
@@ -276,7 +281,7 @@ function App() {
   const handleSubmitRegister = (e) => {
     e.preventDefault();
     auth
-      .register(name, email, password)
+      .register(values.name, values.email, values.password)
       .then((res) => {
         if (res) {
           navigate("/sign-in", { replace: true });
@@ -286,6 +291,10 @@ function App() {
         console.log("Error", err);
       });
   };
+
+  function closePopup() {
+    setIsOpen(false)
+  }
 
   return (
     <div>
@@ -297,9 +306,8 @@ function App() {
             element={
               <Register
                 submitRegister={handleSubmitRegister}
-                handleNameChange={handleNameChange}
-                handleEmailChange={handleEmailChange}
-                handlePasswordChange={handlePasswordChange}
+                handleChange={handleChange}
+                errors={errors}
               />
             }
           />
@@ -308,8 +316,8 @@ function App() {
             element={
               <Login
                 handleSubmitLogin={handleSubmitLogin}
-                handleEmailChange={handleEmailChange}
-                handlePasswordChange={handlePasswordChange}
+                handleChange={handleChange}
+                errors={errors}
               />
             }
           />
@@ -351,12 +359,14 @@ function App() {
                 loggedIn={loggedIn}
                 clearMovies={clearMovies}
                 handleUpdateUser={handleUpdateUser}
+                values={values}
               />
             }
           />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
         <Burger isOpen={isBurgerOpen} closeBurger={closeBurger} />
+        <Popup onClose={closePopup} isOpen={isOpen} popupMessage={popupMessage} />
       </CurrentUserContext.Provider>
     </div>
   );

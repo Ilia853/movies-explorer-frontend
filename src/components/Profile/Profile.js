@@ -35,14 +35,15 @@ export default function Profile({
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    if(currentUser.name === name || currentUser.email === email) {
-      // alert("введенные данные совпадают с текущими")
+    if(currentUser.name !== name && currentUser.email === email) {
       const profileError = document.querySelector(".profile__error")
       profileError.textContent = "введенные данные совпадают с текущими"
       setTimeout(() => {
         profileError.textContent = ""
-      }, 1500);
+      }, 1500)
     } else {
+      const editButton = document.querySelector(".profile__edit");
+      editButton.removeAttribute("disabled");
       handleUpdateUser({
         name,
         email,

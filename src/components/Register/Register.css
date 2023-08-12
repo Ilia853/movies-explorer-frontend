@@ -73,6 +73,15 @@
     cursor: pointer;
 }
 
+.register__form-button:disabled {
+    opacity: .5;
+    cursor: auto;
+}
+
+.register__form-button:disabled:hover {
+    opacity: .5;
+}
+
 .register__form-button:hover {
     opacity: 0.6;
 }

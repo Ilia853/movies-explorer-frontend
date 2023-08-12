@@ -69,6 +69,10 @@
     cursor: pointer;
 }
 
+.profile__edit:disabled {
+    cursor: auto;
+}
+
 .profile__exit {
     display: flex;
     justify-content: center;

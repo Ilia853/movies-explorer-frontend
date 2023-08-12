@@ -60,7 +60,7 @@ export default function SavedMovies({
           />
           <button
             className={
-              num < 1
+              num > 0 && num < 1
                 ? "movies__button-more movies__button-more_type_active"
                 : "movies__button-more"
             }
