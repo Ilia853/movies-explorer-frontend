@@ -31,6 +31,8 @@ function App() {
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
 
+  console.log(values);
+
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -59,9 +61,11 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
+      console.log(movies);
       mainApi
         .getMovies()
         .then((movies) => {
+          console.log(movies);
           setCreatedMovies(movies);
           setLongCreatedMovies(movies);
         })
@@ -99,7 +103,9 @@ function App() {
   }
 
   useEffect(() => {
+    console.log(movies);
     const finalMovies = setLikedMovies(movies ,createdMovies)
+    console.log(finalMovies);
     setMovies(finalMovies);
     setLongMovies(finalMovies);
   }, [createdMovies])
@@ -193,6 +199,7 @@ function App() {
     const isChecked = document.getElementById("checkbox");
     if (isChecked.checked) {
       toggleCheckBox();
+      console.log(movies);
       shortMovies(movies)
       setMovies(shortMovies);
     } else {
@@ -231,6 +238,7 @@ function App() {
 
   function tokenCheck() {
     const token = localStorage.getItem("token");
+    console.log(movies);
     if (token) {
       mainApi.setToken(token);
       auth
@@ -241,11 +249,18 @@ function App() {
               email: res.email,
               name: res.name,
             };
+            console.log(userData);
             setCurrentUser(userData);
             handleLogin();
             navigate("/movies", { replace: true });
-            setMovies(JSON.parse(localStorage.getItem("searchedMovies")));
+            console.log(localStorage.getItem("searchedMovies"));
+            console.log(movies);
+            if (localStorage.length > 3) {
+              setMovies(JSON.parse(localStorage.getItem("searchedMovies")));
+            }
+            console.log(movies);
             setLongMovies(JSON.parse(localStorage.getItem("searchedMovies")));
+            console.log(movies);
           }
         })
         .catch((err) => {
