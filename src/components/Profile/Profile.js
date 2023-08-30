@@ -3,17 +3,11 @@ import Header from "../Header/Header";
 import { Link, useNavigate } from "react-router-dom";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-export default function Profile({
-  openBurger,
-  clearMovies,
-  handleUpdateUser,
-  values,
-}) {
+export default function Profile({ openBurger, clearMovies, handleUpdateUser }) {
   const currentUser = React.useContext(CurrentUserContext);
-  const [name, setName] = useState(values.name);
-  const [email, setEmail] = useState(values.email);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
-
 
   function handleNameChange(evt) {
     setName(evt.target.value);
@@ -33,18 +27,15 @@ export default function Profile({
     localStorage.removeItem("searchedMovies");
     clearMovies();
   }
-  console.log(currentUser.name === name);
 
   function handleSubmit(evt) {
-    console.log(currentUser.name, name);
-    console.log(currentUser.name === name || currentUser.email === email);
     evt.preventDefault();
-    if(currentUser.name === name && currentUser.email === email) {
-      const profileError = document.querySelector(".profile__error")
-      profileError.textContent = "введенные данные совпадают с текущими"
+    if (currentUser.name === name && currentUser.email === email) {
+      const profileError = document.querySelector(".profile__error");
+      profileError.textContent = "введенные данные совпадают с текущими";
       setTimeout(() => {
-        profileError.textContent = ""
-      }, 1500)
+        profileError.textContent = "";
+      }, 1500);
     } else {
       const editButton = document.querySelector(".profile__edit");
       editButton.removeAttribute("disabled");
@@ -55,11 +46,6 @@ export default function Profile({
       navigate("/movies", { replace: true });
     }
   }
-
-  React.useEffect(() => {
-    setName(currentUser.name);
-    setEmail(currentUser.email);
-  }, [currentUser]);
 
   return (
     <section className="profile">

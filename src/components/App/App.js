@@ -236,9 +236,8 @@ function App() {
     tokenCheck();
   }, []);
 
-  function tokenCheck() {
+  const tokenCheck = () => {
     const token = localStorage.getItem("token");
-    console.log(movies);
     if (token) {
       mainApi.setToken(token);
       auth
@@ -249,18 +248,13 @@ function App() {
               email: res.email,
               name: res.name,
             };
-            console.log(userData);
-            setCurrentUser(userData);
             handleLogin();
+            setCurrentUser(userData);
             navigate("/movies", { replace: true });
-            console.log(localStorage.getItem("searchedMovies"));
-            console.log(movies);
             if (localStorage.length > 3) {
               setMovies(JSON.parse(localStorage.getItem("searchedMovies")));
             }
-            console.log(movies);
             setLongMovies(JSON.parse(localStorage.getItem("searchedMovies")));
-            console.log(movies);
           }
         })
         .catch((err) => {
@@ -283,6 +277,17 @@ function App() {
       .authorize(values.email, values.password)
       .then((data) => {
         if (data.token) {
+          auth.getProfile(data.token)
+          .then((res) => {
+            const userData = {
+              email: res.email,
+              name: res.name,
+            };
+            setCurrentUser(userData)
+          })
+          .catch((err) => {
+            console.log("User Data Error", err);
+          })
           handleLogin();
           navigate("/movies", { replace: true });
         }
@@ -374,6 +379,7 @@ function App() {
                 loggedIn={loggedIn}
                 clearMovies={clearMovies}
                 handleUpdateUser={handleUpdateUser}
+                handleChange={handleChange}
                 values={values}
               />
             }
