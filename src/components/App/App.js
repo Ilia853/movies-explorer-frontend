@@ -31,8 +31,6 @@ function App() {
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
 
-  console.log(values);
-
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -61,11 +59,9 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
-      console.log(movies);
       mainApi
         .getMovies()
         .then((movies) => {
-          console.log(movies);
           setCreatedMovies(movies);
           setLongCreatedMovies(movies);
         })
@@ -88,8 +84,9 @@ function App() {
 
   function handleCreateMovie(movie) {
     if (createdMovies.some((m) => m.movieId === movie.id)) {
-      setIsOpen(true)
-      setPopupMessage("Такой фильм уже в вашей коллекции")
+      // handleDeleteMovie(movie.movieId)
+      // setIsOpen(true)
+      // setPopupMessage("Такой фильм уже в вашей коллекции")
     } else {
       mainApi
         .createMovie(movie)
@@ -102,16 +99,7 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    console.log(movies);
-    const finalMovies = setLikedMovies(movies ,createdMovies)
-    console.log(finalMovies);
-    setMovies(finalMovies);
-    setLongMovies(finalMovies);
-  }, [createdMovies])
-
   function handleDeleteMovie(id) {
-    console.log(id);
     mainApi.delMovie(id)
         .then(() => {
             setCreatedMovies((movies) => movies.filter((m) => m._id !== id));
@@ -120,6 +108,12 @@ function App() {
             console.log("deletingMovieError", err);
         })
   }
+
+  useEffect(() => {
+    const finalMovies = setLikedMovies(movies ,createdMovies)
+    setMovies(finalMovies);
+    setLongMovies(finalMovies);
+  }, [createdMovies])
 
   function saveInStorage(movies, where) {
     localStorage.setItem(where, JSON.stringify(movies));
@@ -199,7 +193,6 @@ function App() {
     const isChecked = document.getElementById("checkbox");
     if (isChecked.checked) {
       toggleCheckBox();
-      console.log(movies);
       shortMovies(movies)
       setMovies(shortMovies);
     } else {
@@ -270,7 +263,8 @@ function App() {
   const handleSubmitLogin = (evt) => {
     evt.preventDefault();
     if (!values.email || !values.password) {
-      console.log("Введите почту и пароль");
+      setIsOpen(true)
+      setPopupMessage("Введите почту и пароль")
       return;
     }
     auth
@@ -293,8 +287,7 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log("Login", err);
-        console.log("Что-то пошло не так! Попробуйте ещё раз.");
+        console.log("Что-то пошло не так! Попробуйте ещё раз");
       });
   };
 
@@ -353,6 +346,8 @@ function App() {
                 switchPreloader={switchPreloader}
                 loggedIn={loggedIn}
                 handleCreateMovie={handleCreateMovie}
+                createdMovies={createdMovies}
+                handleDeleteMovie={handleDeleteMovie}
               />
             }
           />

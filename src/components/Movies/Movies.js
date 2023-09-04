@@ -12,10 +12,10 @@ export default function Movies({
   onShortMovies,
   switchPreloader,
   handleCreateMovie,
+  createdMovies,
+  handleDeleteMovie
 }) {
   const [moviesAmount, setMoviesAmount] = useState(12);
-
-  console.log(movies);
 
   function handleMovieAmount() {
     if (window.innerWidth > 1139) {
@@ -62,6 +62,8 @@ export default function Movies({
             movies={movies}
             handleCreateMovie={handleCreateMovie}
             moviesAmount={moviesAmount}
+            createdMovies={createdMovies}
+            handleDeleteMovie={handleDeleteMovie}
           />
           <button
             className={

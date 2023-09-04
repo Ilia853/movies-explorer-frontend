@@ -2,7 +2,7 @@ import React from "react";
 import { MOVIES_URL } from "../../utils/const";
 import { useLocation } from "react-router-dom";
 
-export default function MoviesCard({ movies, handleCreateMovie, handleDeleteMovie }) {
+export default function MoviesCard({ movies, handleCreateMovie, handleDeleteMovie, createdMovies }) {
   const location = useLocation();
   const pathname = location.pathname;
 
@@ -14,10 +14,14 @@ export default function MoviesCard({ movies, handleCreateMovie, handleDeleteMovi
 
   const takeMoviesData = () => {
     if(pathname === "/movies") {
-      handleCreateMovie(movies);
+      if(createdMovies.some((m) => m.movieId === movies.id)) {
+        const movie = createdMovies.find(m => m.movieId === movies.id)
+        handleDeleteMovie(movie._id)
+      } else {
+        handleCreateMovie(movies);
+      }
     } else {
       handleDeleteMovie(movies._id)
-      console.log("movie was deleted");
     }
   };
 

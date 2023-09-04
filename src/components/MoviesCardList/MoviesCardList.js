@@ -5,7 +5,8 @@ export default function MoviesCardList({
   movies,
   handleCreateMovie,
   handleDeleteMovie,
-  moviesAmount
+  moviesAmount,
+  createdMovies
 }) {
   
 
@@ -18,6 +19,7 @@ export default function MoviesCardList({
             key={item.id || item._id}
             handleCreateMovie={handleCreateMovie}
             handleDeleteMovie={handleDeleteMovie}
+            createdMovies={createdMovies}
           />
         ))}
     </ul>
