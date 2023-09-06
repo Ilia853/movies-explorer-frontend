@@ -30,6 +30,8 @@ function App() {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
+  // const [inputData, setInputData] = useState("");
+  const [checkboxState, setCheckBoxState] = useState(false);
 
   const navigate = useNavigate();
 
@@ -83,26 +85,22 @@ function App() {
   }
 
   function handleCreateMovie(movie) {
-    if (createdMovies.some((m) => m.movieId === movie.id)) {
-      // handleDeleteMovie(movie.movieId)
-      // setIsOpen(true)
-      // setPopupMessage("Такой фильм уже в вашей коллекции")
-    } else {
       mainApi
         .createMovie(movie)
         .then((movie) => {
           setCreatedMovies([movie, ...createdMovies]);
+          setLongCreatedMovies([movie, ...longCreatedMovies])
         })
         .catch((err) => {
           console.log("createMovieError", err);
         });
-    }
   }
 
   function handleDeleteMovie(id) {
     mainApi.delMovie(id)
         .then(() => {
             setCreatedMovies((movies) => movies.filter((m) => m._id !== id));
+            setLongCreatedMovies((movies) => movies.filter((m) => m._id !== id));
         })
         .catch((err) => {
             console.log("deletingMovieError", err);
@@ -115,8 +113,8 @@ function App() {
     setLongMovies(finalMovies);
   }, [createdMovies])
 
-  function saveInStorage(movies, where) {
-    localStorage.setItem(where, JSON.stringify(movies));
+  function saveInStorage(what, where) {
+    localStorage.setItem(where, JSON.stringify(what));
   }
 
   const sortMovies = (movies, input) => {
@@ -132,12 +130,8 @@ function App() {
     return findedMovies;
   };
 
-  function toggleCheckBox() {
-    const checkbox = document.querySelector(".filter-checkbox-icon");
-    checkbox.classList.toggle("filter-checkbox-icon_active");
-  }
-
   function searchMovies(inputData) {
+    setCheckBoxState(false);
     clearMovies();
     setSwitchPreloader(true);
     moviesApi
@@ -147,7 +141,7 @@ function App() {
         if(sortedMovies.length === 0) {
           setSwitchPreloader(false);
           setIsOpen(true);
-          setPopupMessage("Ничего не нашлось, попробуйте ввести другой запрос.")
+          setPopupMessage("Ничего не нашлось, попробуйте другой запрос.")
         } else {
           const finalMovies = setLikedMovies(sortedMovies ,createdMovies)
           saveInStorage(finalMovies, "searchedMovies");
@@ -184,37 +178,44 @@ function App() {
     setSwitchPreloader(false);
   }
 
-  const shortMovies = (movies) => movies.filter((movie) => {
+  const filterMovies = (movies) => movies.filter((movie) => {
     const shortMovie = movie.duration < 40;
     return shortMovie;
   });
 
   function mountShortMovies() {
-    const isChecked = document.getElementById("checkbox");
-    if (isChecked.checked) {
-      toggleCheckBox();
-      shortMovies(movies)
+    if (!checkboxState) {
+      setCheckBoxState(true);
+      const shortMovies = filterMovies(movies)
       setMovies(shortMovies);
+      saveInStorage(shortMovies, "filteredMovies")
+      saveInStorage(longMovies, "searchedMovies")
+      saveInStorage(true, "checkboxState")
     } else {
-      toggleCheckBox();
-      setMovies(longMovies);
+      setCheckBoxState(false);
+      setLongMovies(JSON.parse(localStorage.getItem("searchedMovies")))
+      setMovies(JSON.parse(localStorage.getItem("searchedMovies")));
+      console.log(movies);
+      console.log(longMovies);
+      // saveInStorage(longMovies, "searchedMovies")
+      saveInStorage(false, "checkboxState")
     }
   }
 
   function mountCreatedShortMovies() {
-    const isChecked = document.getElementById("checkbox");
-    if (isChecked.checked) {
-      toggleCheckBox();
-      shortMovies(createdMovies)
+    if (!checkboxState) {
+      setCheckBoxState(true);
+      const shortMovies = filterMovies(createdMovies)
       setCreatedMovies(shortMovies);
     } else {
-      toggleCheckBox();
+      setCheckBoxState(false);
       setCreatedMovies(longCreatedMovies);
     }
   }
 
   function clearMovies() {
     setMovies([]);
+    setLongMovies([]);
   }
 
   function openBurger() {
@@ -244,10 +245,25 @@ function App() {
             handleLogin();
             setCurrentUser(userData);
             navigate("/movies", { replace: true });
-            if (localStorage.length > 3) {
-              setMovies(JSON.parse(localStorage.getItem("searchedMovies")));
+            console.log(localStorage);
+            const searchedMovies = JSON.parse(localStorage.getItem("searchedMovies"))
+            const filteredMovies = JSON.parse(localStorage.getItem("filteredMovies"))
+            if (searchedMovies && localStorage.checkboxState === "false") {
+              setMovies(searchedMovies);
+              //setLongMovies(searchedMovies);
+              setCheckBoxState(false)
+            } else if (filteredMovies && localStorage.checkboxState === "true") {
+              setMovies(filteredMovies);
+              // setLongMovies(searchedMovies);
+              setCheckBoxState(true);
             }
-            setLongMovies(JSON.parse(localStorage.getItem("searchedMovies")));
+            // if (!localStorage.checkboxState || localStorage.searchedMovies) {
+            //   setMovies(JSON.parse(localStorage.getItem("filteredMovies")));
+            //   setCheckBoxState(true)
+            // } else {
+            //   setMovies(JSON.parse(localStorage.getItem("searchedMovies")));
+            //   setCheckBoxState(false)
+            // }
           }
         })
         .catch((err) => {
@@ -260,8 +276,7 @@ function App() {
     setLoggedIn(true);
   }
 
-  const handleSubmitLogin = (evt) => {
-    evt.preventDefault();
+  const handleSubmitLogin = () => {
     if (!values.email || !values.password) {
       setIsOpen(true)
       setPopupMessage("Введите почту и пароль")
@@ -278,6 +293,8 @@ function App() {
               name: res.name,
             };
             setCurrentUser(userData)
+            // saveInStorage(false, "checkboxState");
+            setCheckBoxState(false)
           })
           .catch((err) => {
             console.log("User Data Error", err);
@@ -291,13 +308,15 @@ function App() {
       });
   };
 
-  const handleSubmitRegister = (e) => {
-    e.preventDefault();
+  const handleSubmitRegister = (evt) => {
+    evt.preventDefault();
     auth
       .register(values.name, values.email, values.password)
       .then((res) => {
         if (res) {
-          navigate("/sign-in", { replace: true });
+          console.log(res);
+          handleSubmitLogin();
+          //navigate("/movies", { replace: true });
         }
       })
       .catch((err) => {
@@ -313,7 +332,7 @@ function App() {
     <div>
       <CurrentUserContext.Provider value={currentUser}>
         <Routes>
-          <Route path="/" element={<Main />} />
+          <Route path="/" element={<Main loggedIn={loggedIn} />} />
           <Route
             path="/sign-up"
             element={
@@ -342,12 +361,15 @@ function App() {
                 movies={movies}
                 openBurger={openBurger}
                 onFindMovie={searchMovies}
-                onShortMovies={mountShortMovies}
+                onSortMovies={mountShortMovies}
+                checkboxState={checkboxState}
                 switchPreloader={switchPreloader}
                 loggedIn={loggedIn}
                 handleCreateMovie={handleCreateMovie}
                 createdMovies={createdMovies}
                 handleDeleteMovie={handleDeleteMovie}
+                setIsOpen={setIsOpen}
+                setPopupMessage={setPopupMessage}
               />
             }
           />
@@ -360,8 +382,11 @@ function App() {
                 openBurger={openBurger}
                 loggedIn={loggedIn}
                 onFindMovie={searchSavedMovies}
-                onShortMovies={mountCreatedShortMovies}
+                onSortMovies={mountCreatedShortMovies}
+                checkboxState={checkboxState}
                 handleDeleteMovie={handleDeleteMovie}
+                setIsOpen={setIsOpen}
+                setPopupMessage={setPopupMessage}
               />
             }
           />
@@ -376,13 +401,18 @@ function App() {
                 handleUpdateUser={handleUpdateUser}
                 handleChange={handleChange}
                 values={values}
+                setLoggedIn={setLoggedIn}
               />
             }
           />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
         <Burger isOpen={isBurgerOpen} closeBurger={closeBurger} />
-        <Popup onClose={closePopup} isOpen={isOpen} popupMessage={popupMessage} />
+        <Popup
+          onClose={closePopup}
+          isOpen={isOpen}
+          popupMessage={popupMessage}
+        />
       </CurrentUserContext.Provider>
     </div>
   );

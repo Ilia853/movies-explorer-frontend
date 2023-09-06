@@ -3,7 +3,7 @@ import Header from "../Header/Header";
 import { Link, useNavigate } from "react-router-dom";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-export default function Profile({ openBurger, clearMovies, handleUpdateUser }) {
+export default function Profile({ openBurger, clearMovies, handleUpdateUser, loggedIn, setLoggedIn }) {
   const currentUser = React.useContext(CurrentUserContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -25,7 +25,10 @@ export default function Profile({ openBurger, clearMovies, handleUpdateUser }) {
   function signOut() {
     localStorage.removeItem("token");
     localStorage.removeItem("searchedMovies");
+    localStorage.removeItem("filteredMovies");
+    localStorage.removeItem("checkboxState");
     clearMovies();
+    setLoggedIn(false)
   }
 
   function handleSubmit(evt) {
@@ -49,7 +52,7 @@ export default function Profile({ openBurger, clearMovies, handleUpdateUser }) {
 
   return (
     <section className="profile">
-      <Header openBurger={openBurger} />
+      <Header openBurger={openBurger} loggedIn={loggedIn} />
       <h2 className="profile__title">Привет, {name}!</h2>
       <span className="profile__error"></span>
       <form className="profile__form" onSubmit={handleSubmit}>

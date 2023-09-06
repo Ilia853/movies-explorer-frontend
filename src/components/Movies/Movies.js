@@ -9,11 +9,15 @@ export default function Movies({
   movies,
   openBurger,
   onFindMovie,
-  onShortMovies,
+  onSortMovies,
+  checkboxState,
   switchPreloader,
   handleCreateMovie,
   createdMovies,
-  handleDeleteMovie
+  handleDeleteMovie,
+  loggedIn,
+  setIsOpen,
+  setPopupMessage,
 }) {
   const [moviesAmount, setMoviesAmount] = useState(12);
 
@@ -49,13 +53,16 @@ export default function Movies({
 
   return (
     <>
-      <Header openBurger={openBurger} />
+      <Header openBurger={openBurger} loggedIn={loggedIn} />
       <main className="main">
         <section className="movies">
           <SearchForm
             onFindMovie={onFindMovie}
-            onShortMovies={onShortMovies}
+            onSortMovies={onSortMovies}
             movies={movies}
+            setIsOpen={setIsOpen}
+            setPopupMessage={setPopupMessage}
+            checkboxState={checkboxState}
           />
           <Preloader switchPreloader={switchPreloader} />
           <MoviesCardList

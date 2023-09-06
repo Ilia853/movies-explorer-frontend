@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 
 export default function Login({ handleSubmitLogin, handleChange, errors }) {
 
+  function login(evt) {
+    evt.preventDefault();
+    handleSubmitLogin()
+  }
+
   return (
     <section className="login">
       <div className="register__header-logo-wrapper">
@@ -11,7 +16,7 @@ export default function Login({ handleSubmitLogin, handleChange, errors }) {
         </Link>
         <h2 className="register__title">Рады видеть!</h2>
       </div>
-      <form className="register__form" onSubmit={handleSubmitLogin} noValidate>
+      <form className="register__form" onSubmit={login} noValidate>
         <p className="register__field-name">E-mail</p>
         <input
           className="register__input register__input_type_email"

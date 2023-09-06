@@ -1,10 +1,8 @@
 import React from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { display, displayNone } from "../../utils/const";
 
-function Header({ openBurger }) {
-  const location = useLocation();
-  const pathname = location.pathname;
+function Header({ openBurger, loggedIn }) {
 
   return (
     <header className="header">
@@ -13,32 +11,32 @@ function Header({ openBurger }) {
         <NavLink
           to="/movies" 
           className={({isActive}) => `header__film ${isActive ? " header__film_active" : ""}`} 
-          style={pathname === "/profile" || pathname === "/movies" || pathname === "/saved-movies" ? display : displayNone}>
+          style={loggedIn ? display : displayNone}>
           Фильмы
         </NavLink>
         <NavLink
           to="/saved-movies"
           className={({isActive}) => `header__film ${isActive ? " header__film_active" : ""}`}
-          style={pathname === "/profile" || pathname === "/movies" || pathname === "/saved-movies" ? display : displayNone}>
+          style={loggedIn ? display : displayNone}>
           Сохранённые фильмы
         </NavLink>
       </nav>
       <div className="header__sign-links">
         <div
-          className="header__burger" style={pathname === "/" ? displayNone : display}
+          className="header__burger" style={!loggedIn === "/" ? displayNone : display}
           onClick={openBurger}>
         </div>
         <Link to="/profile"
           className="header__account-button"
-          style={pathname === "/profile" || pathname === "/movies" || pathname === "/saved-movies" ? display : displayNone}>
+          style={loggedIn ? display : displayNone}>
         </Link>
         <Link
           className="header__sign-up"
-          style={pathname !== "/" ? displayNone : display} to="/sign-up">
+          style={!loggedIn ? display : displayNone} to="/sign-up">
           Регистрация
         </Link>
         <Link to="/sign-in"
-           className="header__sign-in" style={pathname !== "/" ? displayNone : display}>
+          className="header__sign-in" style={!loggedIn ? display : displayNone}>
           <p className="header__sign-in-text">Войти</p>
         </Link>
       </div>

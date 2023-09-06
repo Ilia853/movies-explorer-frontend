@@ -8,8 +8,12 @@ export default function SavedMovies({
   movies,
   openBurger,
   onFindMovie,
-  onShortMovies,
+  onSortMovies,
+  checkboxState,
   handleDeleteMovie,
+  loggedIn,
+  setIsOpen,
+  setPopupMessage,
 }) {
   const [moviesAmount, setMoviesAmount] = useState(12);
 
@@ -45,13 +49,16 @@ export default function SavedMovies({
 
   return (
     <>
-      <Header openBurger={openBurger} />
+      <Header openBurger={openBurger} loggedIn={loggedIn} />
       <main className="main">
         <section className="saved-movies">
           <SearchForm
             movies={movies}
             onFindMovie={onFindMovie}
-            onShortMovies={onShortMovies}
+            onSortMovies={onSortMovies}
+            checkboxState={checkboxState}
+            setIsOpen={setIsOpen}
+            setPopupMessage={setPopupMessage}
           />
           <MoviesCardList
             movies={movies}

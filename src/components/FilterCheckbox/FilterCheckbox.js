@@ -1,11 +1,22 @@
 import React from "react";
 
-export default function FilterCheckbox({ onShortMovies }) {
-  
+export default function FilterCheckbox({ checkboxState, onSortMovies }) {
+
   return (
     <div className="checkbox">
-      <div className="filter-checkbox-icon"></div>
-      <input id="checkbox" type="checkbox" className="filter-checkbox" onClick={onShortMovies} />
+      <div
+        className={
+          !checkboxState
+            ? "filter-checkbox-icon"
+            : "filter-checkbox-icon filter-checkbox-icon_active"
+        }
+      ></div>
+      <input
+        id="checkbox"
+        type="checkbox"
+        className="filter-checkbox"
+        onClick={onSortMovies}
+      />
     </div>
   );
 }
