@@ -14,6 +14,8 @@ export default function SavedMovies({
   loggedIn,
   setIsOpen,
   setPopupMessage,
+  inputData,
+  setInputData,
 }) {
   const [moviesAmount, setMoviesAmount] = useState(12);
 
@@ -49,7 +51,7 @@ export default function SavedMovies({
 
   return (
     <>
-      <Header openBurger={openBurger} loggedIn={loggedIn} />
+      <Header openBurger={openBurger} loggedIn={loggedIn} setInputData={setInputData} />
       <main className="main">
         <section className="saved-movies">
           <SearchForm
@@ -59,6 +61,8 @@ export default function SavedMovies({
             checkboxState={checkboxState}
             setIsOpen={setIsOpen}
             setPopupMessage={setPopupMessage}
+            inputData={inputData}
+            setInputData={setInputData}
           />
           <MoviesCardList
             movies={movies}

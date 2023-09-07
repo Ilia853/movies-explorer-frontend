@@ -30,7 +30,7 @@ function App() {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
-  // const [inputData, setInputData] = useState("");
+  const [inputData, setInputData] = useState("");
   const [checkboxState, setCheckBoxState] = useState(false);
 
   const navigate = useNavigate();
@@ -41,7 +41,12 @@ function App() {
     const value = target.value;
     setValues({...values, [name]: value});
     setErrors({...errors, [name]: target.validationMessage });
+    setIsValid(isValidEmail(value))
     setIsValid(target.closest(".register__form").checkValidity());
+
+    function isValidEmail(email) {
+      return /\S+@\S+\.\S+/.test(email);
+    }
   };
 
   const activeButton = (isValid) => {
@@ -78,6 +83,8 @@ function App() {
       .editProfile(userData.name, userData.email)
       .then((userData) => {
         setCurrentUser(userData);
+        setPopupMessage("Профиль успешно обновлен")
+        setIsOpen(true)
       })
       .catch((err) => {
         console.log("editProfile", err);
@@ -140,9 +147,10 @@ function App() {
         const sortedMovies = sortMovies(moviesData, inputData);
         if(sortedMovies.length === 0) {
           setSwitchPreloader(false);
-          setIsOpen(true);
           setPopupMessage("Ничего не нашлось, попробуйте другой запрос.")
+          setIsOpen(true);
         } else {
+          saveInStorage(inputData, "inputData");
           const finalMovies = setLikedMovies(sortedMovies ,createdMovies)
           saveInStorage(finalMovies, "searchedMovies");
           setMovies(finalMovies);
@@ -172,10 +180,22 @@ function App() {
 
 
   function searchSavedMovies(inputData) {
-    setSwitchPreloader(true);
+    // setCheckBoxState(false);
+    // setSwitchPreloader(true);
+    // const sortedMovies = sortMovies(createdMovies, inputData);
+    // setCreatedMovies(sortedMovies);
+    // setPopupMessage("Ничего не нашлось, попробуйте другой запрос.")
+    // setIsOpen(true);
+    // setSwitchPreloader(false);
     const sortedMovies = sortMovies(createdMovies, inputData);
-    setCreatedMovies(sortedMovies);
-    setSwitchPreloader(false);
+    if (sortedMovies.length === 0) {
+      setSwitchPreloader(false);
+      setPopupMessage("Ничего не нашлось, попробуйте другой запрос.");
+      setIsOpen(true);
+    } else {
+      setCreatedMovies(sortedMovies)
+      setSwitchPreloader(false);
+    }
   }
 
   const filterMovies = (movies) => movies.filter((movie) => {
@@ -248,6 +268,7 @@ function App() {
             console.log(localStorage);
             const searchedMovies = JSON.parse(localStorage.getItem("searchedMovies"))
             const filteredMovies = JSON.parse(localStorage.getItem("filteredMovies"))
+            setInputData(JSON.parse(localStorage.getItem("inputData")));
             if (searchedMovies && localStorage.checkboxState === "false") {
               setMovies(searchedMovies);
               //setLongMovies(searchedMovies);
@@ -293,7 +314,7 @@ function App() {
               name: res.name,
             };
             setCurrentUser(userData)
-            // saveInStorage(false, "checkboxState");
+            saveInStorage(false, "checkboxState");
             setCheckBoxState(false)
           })
           .catch((err) => {
@@ -370,6 +391,8 @@ function App() {
                 handleDeleteMovie={handleDeleteMovie}
                 setIsOpen={setIsOpen}
                 setPopupMessage={setPopupMessage}
+                inputData={inputData}
+                setInputData={setInputData}
               />
             }
           />
@@ -387,6 +410,8 @@ function App() {
                 handleDeleteMovie={handleDeleteMovie}
                 setIsOpen={setIsOpen}
                 setPopupMessage={setPopupMessage}
+                inputData={inputData}
+                setInputData={setInputData}
               />
             }
           />

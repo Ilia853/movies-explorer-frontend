@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
 export default function SearchForm({
@@ -6,19 +6,21 @@ export default function SearchForm({
   setIsOpen,
   setPopupMessage,
   checkboxState,
-  onSortMovies
+  onSortMovies,
+  inputData,
+  setInputData
 }) {
-  const [movieTitle, setMovieTitle] = useState("");
+  // const [movieTitle, setMovieTitle] = useState("");
 
   function handleMoviesSearch(evt) {
-    setMovieTitle(evt.target.value);
+    setInputData(evt.target.value);
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    if (movieTitle !== "") {
-      onFindMovie(movieTitle);
-      setMovieTitle("");
+    if (inputData !== "") {
+      onFindMovie(inputData);
+      //setMovieTitle(inputData)
     } else {
       setIsOpen(true);
       setPopupMessage("Поле не должно быть пустым");
@@ -34,7 +36,7 @@ export default function SearchForm({
           className="movies__search-input"
           required
           onChange={handleMoviesSearch}
-          value={movieTitle}
+          value={inputData}
         />
         <span className="movies__search-error"></span>
         <button type="submit" className="movies__search-button"></button>

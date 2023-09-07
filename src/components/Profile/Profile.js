@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Header from "../Header/Header";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 export default function Profile({ openBurger, clearMovies, handleUpdateUser, loggedIn, setLoggedIn }) {
   const currentUser = React.useContext(CurrentUserContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   function handleNameChange(evt) {
     setName(evt.target.value);
@@ -27,6 +27,7 @@ export default function Profile({ openBurger, clearMovies, handleUpdateUser, log
     localStorage.removeItem("searchedMovies");
     localStorage.removeItem("filteredMovies");
     localStorage.removeItem("checkboxState");
+    localStorage.removeItem("inputData");
     clearMovies();
     setLoggedIn(false)
   }
@@ -46,7 +47,7 @@ export default function Profile({ openBurger, clearMovies, handleUpdateUser, log
         name,
         email,
       });
-      navigate("/movies", { replace: true });
+      // navigate("/movies", { replace: true });
     }
   }
 

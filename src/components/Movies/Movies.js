@@ -18,6 +18,8 @@ export default function Movies({
   loggedIn,
   setIsOpen,
   setPopupMessage,
+  inputData,
+  setInputData,
 }) {
   const [moviesAmount, setMoviesAmount] = useState(12);
 
@@ -53,7 +55,7 @@ export default function Movies({
 
   return (
     <>
-      <Header openBurger={openBurger} loggedIn={loggedIn} />
+      <Header openBurger={openBurger} loggedIn={loggedIn} setInputData={setInputData} />
       <main className="main">
         <section className="movies">
           <SearchForm
@@ -63,6 +65,8 @@ export default function Movies({
             setIsOpen={setIsOpen}
             setPopupMessage={setPopupMessage}
             checkboxState={checkboxState}
+            inputData={inputData}
+            setInputData={setInputData}
           />
           <Preloader switchPreloader={switchPreloader} />
           <MoviesCardList

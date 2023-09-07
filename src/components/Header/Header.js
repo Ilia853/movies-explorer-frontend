@@ -2,7 +2,15 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { display, displayNone } from "../../utils/const";
 
-function Header({ openBurger, loggedIn }) {
+function Header({ openBurger, loggedIn, setInputData }) {
+
+  function clearInput () {
+    setInputData("")
+  }
+
+  function loadInput () {
+    setInputData(JSON.parse(localStorage.getItem("inputData")));
+  }
 
   return (
     <header className="header">
@@ -11,13 +19,15 @@ function Header({ openBurger, loggedIn }) {
         <NavLink
           to="/movies" 
           className={({isActive}) => `header__film ${isActive ? " header__film_active" : ""}`} 
-          style={loggedIn ? display : displayNone}>
+          style={loggedIn ? display : displayNone}
+          onClick={loadInput}>
           Фильмы
         </NavLink>
         <NavLink
           to="/saved-movies"
           className={({isActive}) => `header__film ${isActive ? " header__film_active" : ""}`}
-          style={loggedIn ? display : displayNone}>
+          style={loggedIn ? display : displayNone}
+          onClick={clearInput}>
           Сохранённые фильмы
         </NavLink>
       </nav>
