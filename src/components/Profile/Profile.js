@@ -3,11 +3,14 @@ import Header from "../Header/Header";
 import { Link } from "react-router-dom";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-export default function Profile({ openBurger, clearMovies, handleUpdateUser, loggedIn, setLoggedIn }) {
+export default function Profile({ openBurger, clearMovies, handleUpdateUser, loggedIn, setLoggedIn, setInputData }) {
   const currentUser = React.useContext(CurrentUserContext);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  // const navigate = useNavigate();
+  const [name, setName] = useState(currentUser.name);
+  const [email, setEmail] = useState(currentUser.email);
+  const [error, setError] = useState("");
+  const [isValid, setIsValid] = useState(false);
+
+  console.log(currentUser.name, name);
 
   function handleNameChange(evt) {
     setName(evt.target.value);
@@ -17,10 +20,31 @@ export default function Profile({ openBurger, clearMovies, handleUpdateUser, log
     setEmail(evt.target.value);
   }
 
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
+
+  function checkValidity(name, email) {
+    if(currentUser.name === name && currentUser.email === email) {
+      setError("введенные данные совпадают с текущими")
+      setIsValid(false)
+    } else if (!isValidEmail(email)) {
+      setError("некорректный email")
+      setIsValid(false)
+    } else {
+      setError("")
+      setIsValid(true)
+    }
+  }
+
   useEffect(() => {
     setName(currentUser.name);
     setEmail(currentUser.email);
   }, [currentUser]);
+
+  useEffect(() => {
+    checkValidity(name, email)
+  }, [name, email])
 
   function signOut() {
     localStorage.removeItem("token");
@@ -32,31 +56,31 @@ export default function Profile({ openBurger, clearMovies, handleUpdateUser, log
     setLoggedIn(false)
   }
 
-  function handleSubmit(evt) {
-    evt.preventDefault();
-    if (currentUser.name === name && currentUser.email === email) {
-      const profileError = document.querySelector(".profile__error");
-      profileError.textContent = "введенные данные совпадают с текущими";
-      setTimeout(() => {
-        profileError.textContent = "";
-      }, 1500);
-    } else {
-      const editButton = document.querySelector(".profile__edit");
-      editButton.removeAttribute("disabled");
-      handleUpdateUser({
-        name,
-        email,
-      });
-      // navigate("/movies", { replace: true });
-    }
-  }
+  // function handleSubmit(evt) {
+  //   evt.preventDefault();
+  //   if (currentUser.name === name && currentUser.email === email) {
+  //     const profileError = document.querySelector(".profile__error");
+  //     profileError.textContent = "введенные данные совпадают с текущими";
+  //     setTimeout(() => {
+  //       profileError.textContent = "";
+  //     }, 1500);
+  //   } else {
+  //     const editButton = document.querySelector(".profile__edit");
+  //     editButton.removeAttribute("disabled");
+  //     handleUpdateUser({
+  //       name,
+  //       email,
+  //     });
+  //     // navigate("/movies", { replace: true });
+  //   }
+  // }
 
   return (
     <section className="profile">
-      <Header openBurger={openBurger} loggedIn={loggedIn} />
+      <Header openBurger={openBurger} loggedIn={loggedIn} setInputData={setInputData} />
       <h2 className="profile__title">Привет, {name}!</h2>
-      <span className="profile__error"></span>
-      <form className="profile__form" onSubmit={handleSubmit}>
+      <span className="profile__error">{error}</span>
+      <form className="profile__form">
         <div className="profile__input-wrapper">
           <p className="profile__input-title">Имя</p>
           <input
@@ -77,7 +101,7 @@ export default function Profile({ openBurger, clearMovies, handleUpdateUser, log
             required
           />
         </div>
-        <button className="profile__edit" type="submit">
+        <button className="profile__edit" type="submit" disabled={!isValid ? true : false}>
           Редактировать
         </button>
       </form>

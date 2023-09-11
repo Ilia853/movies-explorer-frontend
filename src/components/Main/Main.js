@@ -7,10 +7,10 @@ import Portfolio from "../Portfolio/Portfolio";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
-function Main({ loggedIn }) {
+function Main({ loggedIn, setInputData }) {
     return (
         <>
-          <Header loggedIn={loggedIn} />
+          <Header loggedIn={loggedIn} setInputData={setInputData} />
           <main className="main">
             <Promo />
             <AboutProject />

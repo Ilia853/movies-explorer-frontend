@@ -40,12 +40,24 @@ function App() {
     const name = target.name;
     const value = target.value;
     setValues({...values, [name]: value});
-    setErrors({...errors, [name]: target.validationMessage });
-    setIsValid(isValidEmail(value))
-    setIsValid(target.closest(".register__form").checkValidity());
+    //setErrors({...errors, [name]: target.validationMessage });
+    const checkValidity = target.closest(".register__form").checkValidity()
+    // setIsValid(target.closest(".register__form").checkValidity());
+    // setIsValid(isValidEmail(value))
 
     function isValidEmail(email) {
       return /\S+@\S+\.\S+/.test(email);
+    }
+
+    if(!isValidEmail(values.email) && name === "email") {
+      setIsValid(false)
+      setErrors({...errors, [name]: "email is invalid" });
+    } else if (!checkValidity) {
+      setIsValid(false)
+      setErrors({...errors, [name]: target.validationMessage })
+    } else {
+      setIsValid(true)
+      setErrors({})
     }
   };
 
@@ -316,6 +328,8 @@ function App() {
             setCurrentUser(userData)
             saveInStorage(false, "checkboxState");
             setCheckBoxState(false)
+            // setInputData("");
+            saveInStorage("", "inputData");
           })
           .catch((err) => {
             console.log("User Data Error", err);
@@ -353,7 +367,7 @@ function App() {
     <div>
       <CurrentUserContext.Provider value={currentUser}>
         <Routes>
-          <Route path="/" element={<Main loggedIn={loggedIn} />} />
+          <Route path="/" element={<Main loggedIn={loggedIn} setInputData={setInputData} />} />
           <Route
             path="/sign-up"
             element={
@@ -427,6 +441,7 @@ function App() {
                 handleChange={handleChange}
                 values={values}
                 setLoggedIn={setLoggedIn}
+                setInputData={setInputData}
               />
             }
           />
