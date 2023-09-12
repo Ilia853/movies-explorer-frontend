@@ -8,10 +8,8 @@ export default function SearchForm({
   checkboxState,
   onSortMovies,
   inputData,
-  setInputData
+  setInputData,
 }) {
-  // const [movieTitle, setMovieTitle] = useState("");
-
   function handleMoviesSearch(evt) {
     setInputData(evt.target.value);
   }
@@ -20,7 +18,6 @@ export default function SearchForm({
     evt.preventDefault();
     if (inputData !== "") {
       onFindMovie(inputData);
-      //setMovieTitle(inputData)
     } else {
       setIsOpen(true);
       setPopupMessage("Поле не должно быть пустым");

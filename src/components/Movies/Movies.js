@@ -47,15 +47,19 @@ export default function Movies({
 
   useEffect(() => {
     setTimeout(() => {
-      window.addEventListener("resize",() => {
+      window.addEventListener("resize", () => {
         handleMovieAmount();
-      })
+      });
     }, 3000);
   });
 
   return (
     <>
-      <Header openBurger={openBurger} loggedIn={loggedIn} setInputData={setInputData} />
+      <Header
+        openBurger={openBurger}
+        loggedIn={loggedIn}
+        setInputData={setInputData}
+      />
       <main className="main">
         <section className="movies">
           <SearchForm

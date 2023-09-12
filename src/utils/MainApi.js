@@ -57,10 +57,9 @@ class MainApi {
 
   delMovie(movieId) {
     return fetch(`${this._baseUrl}/movies/${movieId}`, {
-        method: "DELETE",
-        headers: this._headers,
-    })
-        .then(this._checkResponse)
+      method: "DELETE",
+      headers: this._headers,
+    }).then(this._checkResponse);
   }
 
   setToken(token) {
@@ -74,9 +73,8 @@ class MainApi {
 const mainApi = new MainApi({
   baseUrl: BASE_URL,
   headers: {
-      // authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGQxMTFlMzg3NWFiNjM3YTBhOGFmYTgiLCJpYXQiOjE2OTE0MzI2NjksImV4cCI6MTY5MjAzNzQ2OX0.4HZzrUEoesNsc1NsPF-ntaEpFHST-IdcL_RuW0dsMrE",
-      "Content-Type": "application/json",
+    "Content-Type": "application/json",
   },
-})
+});
 
 export default mainApi;

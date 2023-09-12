@@ -2,7 +2,12 @@ import React from "react";
 import { MOVIES_URL } from "../../utils/const";
 import { useLocation } from "react-router-dom";
 
-export default function MoviesCard({ movies, handleCreateMovie, handleDeleteMovie, createdMovies }) {
+export default function MoviesCard({
+  movies,
+  handleCreateMovie,
+  handleDeleteMovie,
+  createdMovies,
+}) {
   const location = useLocation();
   const pathname = location.pathname;
 
@@ -13,15 +18,15 @@ export default function MoviesCard({ movies, handleCreateMovie, handleDeleteMovi
   }
 
   const takeMoviesData = () => {
-    if(pathname === "/movies") {
-      if(createdMovies.some((m) => m.movieId === movies.id)) {
-        const movie = createdMovies.find(m => m.movieId === movies.id)
-        handleDeleteMovie(movie._id)
+    if (pathname === "/movies") {
+      if (createdMovies.some((m) => m.movieId === movies.id)) {
+        const movie = createdMovies.find((m) => m.movieId === movies.id);
+        handleDeleteMovie(movie._id);
       } else {
         handleCreateMovie(movies);
       }
     } else {
-      handleDeleteMovie(movies._id)
+      handleDeleteMovie(movies._id);
     }
   };
 
@@ -39,10 +44,13 @@ export default function MoviesCard({ movies, handleCreateMovie, handleDeleteMovi
         />
       </a>
       <button
-        className={movies.isLiked ? "movies-card__button movies-card__button_type_like"
-          : "movies-card__button"
-          && pathname === "/saved-movies" ? "movies-card__button movies-card__button_type_del"
-          : "movies-card__button"}
+        className={
+          movies.isLiked
+            ? "movies-card__button movies-card__button_type_like"
+            : "movies-card__button" && pathname === "/saved-movies"
+            ? "movies-card__button movies-card__button_type_del"
+            : "movies-card__button"
+        }
         onClick={takeMoviesData}
       ></button>
       <div className="movies-card__discription">

@@ -51,7 +51,11 @@ export default function SavedMovies({
 
   return (
     <>
-      <Header openBurger={openBurger} loggedIn={loggedIn} setInputData={setInputData} />
+      <Header
+        openBurger={openBurger}
+        loggedIn={loggedIn}
+        setInputData={setInputData}
+      />
       <main className="main">
         <section className="saved-movies">
           <SearchForm

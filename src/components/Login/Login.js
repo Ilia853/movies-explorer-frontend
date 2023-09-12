@@ -2,10 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function Login({ handleSubmitLogin, handleChange, errors }) {
-
   function login(evt) {
     evt.preventDefault();
-    handleSubmitLogin()
+    handleSubmitLogin();
   }
 
   return (

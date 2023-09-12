@@ -6,22 +6,22 @@ export default function MoviesCardList({
   handleCreateMovie,
   handleDeleteMovie,
   moviesAmount,
-  createdMovies
+  createdMovies,
 }) {
-  
-
   return (
     <ul className="movies-list">
       {movies &&
-        movies.slice(0, moviesAmount).map((item) => (
-          <MoviesCard
-            movies={item}
-            key={item.id || item._id}
-            handleCreateMovie={handleCreateMovie}
-            handleDeleteMovie={handleDeleteMovie}
-            createdMovies={createdMovies}
-          />
-        ))}
+        movies
+          .slice(0, moviesAmount)
+          .map((item) => (
+            <MoviesCard
+              movies={item}
+              key={item.id || item._id}
+              handleCreateMovie={handleCreateMovie}
+              handleDeleteMovie={handleDeleteMovie}
+              createdMovies={createdMovies}
+            />
+          ))}
     </ul>
   );
 }

@@ -1,12 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function Register({
-  submitRegister,
-  handleChange,
-  errors
-}) {
-
+export default function Register({ submitRegister, handleChange, errors }) {
   return (
     <section className="register">
       <div className="register__header-logo-wrapper">
@@ -15,7 +10,7 @@ export default function Register({
         </Link>
         <h2 className="register__title">Добро пожаловать!</h2>
       </div>
-      <form className="register__form" onSubmit={submitRegister}  noValidate>
+      <form className="register__form" onSubmit={submitRegister} noValidate>
         <p className="register__field-name">Имя</p>
         <input
           className="register__input register__input_type_name"
@@ -46,7 +41,9 @@ export default function Register({
           onChange={handleChange}
         />
         <span className="register__error">{errors.password}</span>
-        <button className="register__form-button" disabled>Зарегистрироваться</button>
+        <button className="register__form-button" disabled>
+          Зарегистрироваться
+        </button>
       </form>
       <div className="register__sign">
         <p className="register__paragraph">Уже зарегистрированы?</p>

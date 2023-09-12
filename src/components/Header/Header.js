@@ -3,12 +3,11 @@ import { Link, NavLink } from "react-router-dom";
 import { display, displayNone } from "../../utils/const";
 
 function Header({ openBurger, loggedIn, setInputData }) {
-
-  function clearInput () {
-    setInputData("")
+  function clearInput() {
+    setInputData("");
   }
 
-  function loadInput () {
+  function loadInput() {
     setInputData(JSON.parse(localStorage.getItem("inputData")));
   }
 
@@ -17,36 +16,49 @@ function Header({ openBurger, loggedIn, setInputData }) {
       <nav className="header__films">
         <NavLink to="/" className="header__logo"></NavLink>
         <NavLink
-          to="/movies" 
-          className={({isActive}) => `header__film ${isActive ? " header__film_active" : ""}`} 
+          to="/movies"
+          className={({ isActive }) =>
+            `header__film ${isActive ? " header__film_active" : ""}`
+          }
           style={loggedIn ? display : displayNone}
-          onClick={loadInput}>
+          onClick={loadInput}
+        >
           Фильмы
         </NavLink>
         <NavLink
           to="/saved-movies"
-          className={({isActive}) => `header__film ${isActive ? " header__film_active" : ""}`}
+          className={({ isActive }) =>
+            `header__film ${isActive ? " header__film_active" : ""}`
+          }
           style={loggedIn ? display : displayNone}
-          onClick={clearInput}>
+          onClick={clearInput}
+        >
           Сохранённые фильмы
         </NavLink>
       </nav>
       <div className="header__sign-links">
         <div
-          className="header__burger" style={!loggedIn === "/" ? displayNone : display}
-          onClick={openBurger}>
-        </div>
-        <Link to="/profile"
+          className="header__burger"
+          style={!loggedIn === "/" ? displayNone : display}
+          onClick={openBurger}
+        ></div>
+        <Link
+          to="/profile"
           className="header__account-button"
-          style={loggedIn ? display : displayNone}>
-        </Link>
+          style={loggedIn ? display : displayNone}
+        ></Link>
         <Link
           className="header__sign-up"
-          style={!loggedIn ? display : displayNone} to="/sign-up">
+          style={!loggedIn ? display : displayNone}
+          to="/sign-up"
+        >
           Регистрация
         </Link>
-        <Link to="/sign-in"
-          className="header__sign-in" style={!loggedIn ? display : displayNone}>
+        <Link
+          to="/sign-in"
+          className="header__sign-in"
+          style={!loggedIn ? display : displayNone}
+        >
           <p className="header__sign-in-text">Войти</p>
         </Link>
       </div>

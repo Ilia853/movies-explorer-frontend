@@ -1,9 +1,9 @@
 export const display = {
-    display: "inline"
-  }
+  display: "inline",
+};
 export const displayNone = {
-display: "none"
-}
+  display: "none",
+};
 
 export const BASE_URL = "http://localhost:3000";
 
