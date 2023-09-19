@@ -74,6 +74,10 @@ function App() {
   }, [isValid]);
 
   useEffect(() => {
+    tokenCheck();
+  }, []);
+
+  useEffect(() => {
     if (loggedIn) {
       tokenCheck();
       mainApi
@@ -250,7 +254,6 @@ function App() {
 
   const tokenCheck = () => {
     const token = localStorage.getItem("token");
-    console.log(token);
     if (token) {
       mainApi.setToken(token);
       auth
