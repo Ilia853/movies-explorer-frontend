@@ -10,14 +10,14 @@ export default function Profile({
   loggedIn,
   setLoggedIn,
   setInputData,
+  setCheckBoxState,
+  loadCreatedMovies,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
   const [name, setName] = useState(currentUser.name);
   const [email, setEmail] = useState(currentUser.email);
   const [error, setError] = useState("");
   const [isValid, setIsValid] = useState(false);
-
-  console.log(currentUser.name, name);
 
   function handleNameChange(evt) {
     setName(evt.target.value);
@@ -77,6 +77,8 @@ export default function Profile({
         openBurger={openBurger}
         loggedIn={loggedIn}
         setInputData={setInputData}
+        setCheckBoxState={setCheckBoxState}
+        loadCreatedMovie={loadCreatedMovies}
       />
       <h2 className="profile__title">Привет, {name}!</h2>
       <span className="profile__error">{error}</span>

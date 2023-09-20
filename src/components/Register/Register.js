@@ -1,7 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function Register({ submitRegister, handleChange, errors }) {
+export default function Register({
+  submitRegister,
+  handleChange,
+  errors,
+  setErrors,
+}) {
+  function disableErrors() {
+    setErrors({});
+  }
   return (
     <section className="register">
       <div className="register__header-logo-wrapper">
@@ -47,7 +55,11 @@ export default function Register({ submitRegister, handleChange, errors }) {
       </form>
       <div className="register__sign">
         <p className="register__paragraph">Уже зарегистрированы?</p>
-        <Link to="/sign-in" className="register__login-link">
+        <Link
+          to="/sign-in"
+          className="register__login-link"
+          onClick={disableErrors}
+        >
           Войти
         </Link>
       </div>

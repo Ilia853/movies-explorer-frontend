@@ -7,10 +7,12 @@ import Portfolio from "../Portfolio/Portfolio";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
-function Main({ loggedIn, setInputData }) {
+function Main({ loggedIn, setInputData, setCheckBoxState, loadCreatedMovies }) {
   return (
     <>
-      <Header loggedIn={loggedIn} setInputData={setInputData} />
+      <Header loggedIn={loggedIn} setInputData={setInputData} 
+      setCheckBoxState={setCheckBoxState}
+      loadCreatedMovies={loadCreatedMovies} />
       <main className="main">
         <Promo />
         <AboutProject />

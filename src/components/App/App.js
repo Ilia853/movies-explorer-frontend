@@ -35,16 +35,16 @@ function App() {
 
   const navigate = useNavigate();
 
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
+
   const handleChange = (event) => {
     const target = event.target;
     const name = target.name;
     const value = target.value;
     setValues({ ...values, [name]: value });
     const checkValidity = target.closest(".register__form").checkValidity();
-
-    function isValidEmail(email) {
-      return /\S+@\S+\.\S+/.test(email);
-    }
 
     if (!isValidEmail(values.email) && name === "email") {
       setIsValid(false);
@@ -59,10 +59,12 @@ function App() {
   };
 
   const activeButton = (isValid) => {
-    if (isValid) {
-      const button = document.querySelector(".register__form-button");
-      if (button) {
+    const button = document.querySelector(".register__form-button");
+    if (button) {
+      if (isValid) {
         button.removeAttribute("disabled");
+      } else {
+        button.setAttribute("disabled", "");
       }
     } else {
       return;
@@ -239,6 +241,10 @@ function App() {
     }
   }
 
+  function loadCreatedMovies() {
+    setCreatedMovies(longCreatedMovies);
+  }
+
   function clearMovies() {
     setMovies([]);
     setLongMovies([]);
@@ -267,7 +273,6 @@ function App() {
             handleLogin();
             setCurrentUser(userData);
             navigate("/movies", { replace: true });
-            console.log(localStorage);
             const searchedMovies = JSON.parse(
               localStorage.getItem("searchedMovies")
             );
@@ -356,7 +361,14 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<Main loggedIn={loggedIn} setInputData={setInputData} />}
+            element={
+              <Main
+                loggedIn={loggedIn}
+                setInputData={setInputData}
+                setCheckBoxState={setCheckBoxState}
+                loadCreatedMovies={loadCreatedMovies}
+              />
+            }
           />
           <Route
             path="/sign-up"
@@ -365,6 +377,7 @@ function App() {
                 submitRegister={handleSubmitRegister}
                 handleChange={handleChange}
                 errors={errors}
+                setErrors={setErrors}
               />
             }
           />
@@ -375,6 +388,7 @@ function App() {
                 handleSubmitLogin={handleSubmitLogin}
                 handleChange={handleChange}
                 errors={errors}
+                setErrors={setErrors}
               />
             }
           />
@@ -397,6 +411,8 @@ function App() {
                 setPopupMessage={setPopupMessage}
                 inputData={inputData}
                 setInputData={setInputData}
+                setCheckBoxState={setCheckBoxState}
+                loadCreatedMovies={loadCreatedMovies}
               />
             }
           />
@@ -416,6 +432,8 @@ function App() {
                 setPopupMessage={setPopupMessage}
                 inputData={inputData}
                 setInputData={setInputData}
+                setCheckBoxState={setCheckBoxState}
+                loadCreatedMovies={loadCreatedMovies}
               />
             }
           />
@@ -432,6 +450,8 @@ function App() {
                 values={values}
                 setLoggedIn={setLoggedIn}
                 setInputData={setInputData}
+                setCheckBoxState={setCheckBoxState}
+                loadCreatedMovies={loadCreatedMovies}
               />
             }
           />

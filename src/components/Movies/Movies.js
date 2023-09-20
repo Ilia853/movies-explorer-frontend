@@ -20,6 +20,8 @@ export default function Movies({
   setPopupMessage,
   inputData,
   setInputData,
+  setCheckBoxState,
+  loadCreatedMovies,
 }) {
   const [moviesAmount, setMoviesAmount] = useState(12);
 
@@ -59,6 +61,8 @@ export default function Movies({
         openBurger={openBurger}
         loggedIn={loggedIn}
         setInputData={setInputData}
+        setCheckBoxState={setCheckBoxState}
+        loadCreatedMovies={loadCreatedMovies}
       />
       <main className="main">
         <section className="movies">

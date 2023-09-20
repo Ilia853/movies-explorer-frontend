@@ -1,10 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function Login({ handleSubmitLogin, handleChange, errors }) {
+export default function Login({
+  handleSubmitLogin,
+  handleChange,
+  errors,
+  setErrors,
+}) {
   function login(evt) {
     evt.preventDefault();
     handleSubmitLogin();
+  }
+
+  function disableErrors() {
+    setErrors({});
   }
 
   return (
@@ -33,6 +42,7 @@ export default function Login({ handleSubmitLogin, handleChange, errors }) {
           onChange={handleChange}
           name="password"
           minLength={6}
+          maxLength={20}
         />
         <span className="register__error">{errors.password}</span>
         <button
@@ -45,7 +55,11 @@ export default function Login({ handleSubmitLogin, handleChange, errors }) {
       </form>
       <div className="register__sign">
         <p className="register__paragraph">Ещё не зарегистрированы?</p>
-        <Link to="/sign-up" className="register__login-link">
+        <Link
+          to="/sign-up"
+          className="register__login-link"
+          onClick={disableErrors}
+        >
           Регистрация
         </Link>
       </div>

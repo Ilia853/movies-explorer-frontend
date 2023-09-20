@@ -2,13 +2,22 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { display, displayNone } from "../../utils/const";
 
-function Header({ openBurger, loggedIn, setInputData }) {
-  function clearInput() {
+function Header({
+  openBurger,
+  loggedIn,
+  setInputData,
+  setCheckBoxState,
+  loadCreatedMovies,
+}) {
+  function clearStates() {
     setInputData("");
+    setCheckBoxState(false);
+    loadCreatedMovies();
   }
 
-  function loadInput() {
+  function loadStates() {
     setInputData(JSON.parse(localStorage.getItem("inputData")));
+    setCheckBoxState(JSON.parse(localStorage.getItem("checkboxState")));
   }
 
   return (
@@ -21,7 +30,7 @@ function Header({ openBurger, loggedIn, setInputData }) {
             `header__film ${isActive ? " header__film_active" : ""}`
           }
           style={loggedIn ? display : displayNone}
-          onClick={loadInput}
+          onClick={loadStates}
         >
           Фильмы
         </NavLink>
@@ -31,7 +40,7 @@ function Header({ openBurger, loggedIn, setInputData }) {
             `header__film ${isActive ? " header__film_active" : ""}`
           }
           style={loggedIn ? display : displayNone}
-          onClick={clearInput}
+          onClick={clearStates}
         >
           Сохранённые фильмы
         </NavLink>
