@@ -3,6 +3,7 @@
 }
 
 .movies__button-more {
+    display: none;
     width: 320px;
     height: 36px;
     border: none;
@@ -18,7 +19,11 @@
     cursor: pointer;
 }
 
-.movies__button-more_hidden {
+.movies__button-more_type_active {
+    display: inline-block;
+}
+
+.movies__button-more_type_hidden {
     visibility: hidden;
     margin: 65px auto 130px;
 }

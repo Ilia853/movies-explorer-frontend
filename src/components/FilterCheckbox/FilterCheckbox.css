@@ -1,8 +1,24 @@
+.checkbox {
+    position: relative;
+}
+
 .filter-checkbox {
-    background: url(../../images/smalltumb.svg);
     width: 36px;
     height: 20px;
     flex-shrink: 0;
     border: none;
     cursor: pointer;
+    opacity: 0;}
+
+.filter-checkbox-icon {
+    position: absolute;
+    width: 36px;
+    height: 20px;
+    background: url(../../images/smalltumboff.png);
+    top: 0;
+    left: 0;
+}
+
+.filter-checkbox-icon_active {
+    background-image: url(../../images/smalltumb.svg);
 }

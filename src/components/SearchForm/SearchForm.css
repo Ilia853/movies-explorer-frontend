@@ -17,13 +17,14 @@
 .movies__search-input {
     flex: 1;
     border-radius: 50px;
-    border: 1.5px solid #AAA;
-    opacity: 0.20000000298023224;
+    border: 1.5px solid rgba(170, 170, 170, .2)    ;
     height: 48px;
-    color: #A0A0A0;
+    color: #000;
     font-size: 14px;
     font-weight: 400;
     line-height: 18px;
+    padding-left: 20px;
+    background-color: #FAFAFA;
 }
 
 .movies__search-button {
@@ -35,10 +36,11 @@
     height: 34px;
     border: none;
     cursor: pointer;
+    border-radius: 25%;
 }
 
 .movies__search-button:hover {
-    opacity: .6;
+    opacity: .8;
 }
 
 .short-movies {

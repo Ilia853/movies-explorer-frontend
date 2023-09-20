@@ -7,22 +7,22 @@ import Portfolio from "../Portfolio/Portfolio";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
-function Main() {
-    return (
-        <>
-          <Header />
-          <main className="main">
-            <Promo />
-            <AboutProject />
-            <Techs />
-            <AboutMe />
-            <Portfolio />
-          </main>
-          <Footer />
-        </>
-          
-        
-    )
+function Main({ loggedIn, setInputData, setCheckBoxState, loadCreatedMovies }) {
+  return (
+    <>
+      <Header loggedIn={loggedIn} setInputData={setInputData} 
+      setCheckBoxState={setCheckBoxState}
+      loadCreatedMovies={loadCreatedMovies} />
+      <main className="main">
+        <Promo />
+        <AboutProject />
+        <Techs />
+        <AboutMe />
+        <Portfolio />
+      </main>
+      <Footer />
+    </>
+  );
 }
 
 export default Main;
